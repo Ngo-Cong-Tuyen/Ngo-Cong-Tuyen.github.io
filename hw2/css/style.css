@@ -1,0 +1,20 @@
+span{
+    color:red;
+}
+
+h1{
+    color:orange;
+    font-size: 30px;
+}
+
+p{
+    color:#353b48;
+}
+
+img{
+    width: 300px;
+}
+
+a{
+    text-decoration: none;
+}
