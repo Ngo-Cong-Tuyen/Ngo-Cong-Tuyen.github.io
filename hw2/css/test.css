@@ -1,4 +1,7 @@
 
+*{
+    box-sizing: border-box;
+}
 ul{
     list-style-type: none;
 }
@@ -51,14 +54,16 @@ ul.menu li{
         -moz-flex-direction: row;
         flex-direction: row;
         flex-wrap: wrap;
-        padding: 0;
+        padding-left: -10px;
+        padding-right: -10px;
         position: relative;
     }
         div.grid-column{
             width: 33.33%;
+            text-align: center;
         }
             div.image{
-                padding: 10px;
+                margin: 10px;
             
             }
 
