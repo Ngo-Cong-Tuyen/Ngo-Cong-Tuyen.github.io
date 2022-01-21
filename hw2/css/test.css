@@ -54,8 +54,8 @@ ul.menu li{
         -moz-flex-direction: row;
         flex-direction: row;
         flex-wrap: wrap;
-        padding-left: -10px;
-        padding-right: -10px;
+        margin-left: -10px;
+        margin-right: -10px;
         position: relative;
     }
         div.grid-column{
