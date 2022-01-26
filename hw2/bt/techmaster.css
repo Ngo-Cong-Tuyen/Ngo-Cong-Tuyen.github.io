@@ -1,0 +1,32 @@
+
+*{
+    box-sizing: border-box;
+}
+
+div.container{
+    width: 1000px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+h1{
+    text-align: center;
+}
+
+    div.box{
+        width: 33.33%;
+    }
+        .boxbox{
+            margin: 15px;
+            box-shadow: 0 2px 3px 1px rgb(0 0 0 / 15%);
+            border-radius: 5px;
+        }
+
+        div.boxbox *:not(img){
+            padding-left: 15px;
+        }
+
+        img{
+            max-width: 100%;
+        }

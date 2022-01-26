@@ -1,0 +1,40 @@
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0px;
+}
+
+img{
+    max-width: 100%;
+}
+
+.container{
+    width: 1000px;
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    margin-top: 100px;
+}
+
+.container *{
+    width: calc( (100% - 30px) / 3  );
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.red{
+    background-color: red;
+}
+
+.green{
+    background-color: green;
+}
+
+.blue{
+    background-color: blue;
+}
