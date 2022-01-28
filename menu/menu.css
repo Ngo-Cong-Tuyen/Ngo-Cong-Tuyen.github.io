@@ -1,0 +1,120 @@
+
+html{
+    font-size: 16px;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0px;
+    font-family: 'Roboto', sans-serif;
+}
+
+img{
+    max-width: 100%;
+}
+
+ul{
+    list-style-type: none;
+}
+
+a{
+    text-decoration: none;
+}
+
+.container{
+    margin:auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: #34465c;    
+    display: flex;  
+    justify-content: space-between;
+}
+
+.container a{
+    color: #ffffff;
+}
+
+.logo-brand{
+    width: 100px;
+    display: flex;
+    align-items: center;
+}
+
+div.menu{
+    display: flex;
+    align-items: center;
+}
+
+ul.menu{
+    display: flex;
+    align-items: center;
+    margin: 0!important;
+}
+
+ul.menu li{
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+    min-height: 54px;
+    margin-bottom: 0px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    position: relative;
+}
+
+ul.menu li:hover .drop-menu{
+    display: block;
+}
+.drop-menu{
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 54px;
+    box-shadow: 0 0 10px rgb(0 0 0 / 15%);
+    border: none;
+    flex-flow: column;
+    margin-top: 0.25rem;
+    padding: 0;
+    width: 200px;
+}
+
+.drop-menu li a{
+    color: #464646!important
+}
+
+.avatar img{
+    width: 2rem;
+    height: 2rem;
+}
+
+li.icon{
+    display: flex;
+}
+
+.gio-hang{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.shopping-cart-top-menu{
+    font-size: 1.4rem;
+}
+
+.count-cart-item {
+    background-color: #26a69a;
+    left: 20px;
+    position: absolute;
+    top: -10px;
+}
+
+.avatar{
+    padding-left: 15px;
+}
+
+.avatar img{
+    border-radius: 50%;
+}
