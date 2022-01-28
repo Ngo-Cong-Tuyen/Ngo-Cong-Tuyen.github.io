@@ -63,10 +63,15 @@ ul.menu li{
     cursor: pointer;
     font-size: 0.9rem;
     position: relative;
+    transition: 0.3s;
 }
 
 ul.menu li:hover .drop-menu{
     display: block;
+}
+
+ul.menu li:hover > a{
+    color: #c4c4c4;
 }
 .drop-menu{
     display: none;
