@@ -1,0 +1,11 @@
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0px;
+    font-family: 'Roboto', sans-serif;
+    background: url(pexels-felix-mittermeier-956999.jpg) center top / 100% no-repeat;
+}
+
