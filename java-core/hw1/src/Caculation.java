@@ -9,12 +9,13 @@ public class Caculation {
         double b= scanner.nextDouble();
         System.out.println("Tong a+b la:");
         System.out.println(Sum(a, b));
-        System.out.println("Hieu a+b la:");
+        System.out.println("Hieu a-b la:");
         System.out.println(Sub(a, b));
-        System.out.println("Tich a+b la:");
+        System.out.println("Tich a*b la:");
         System.out.println(Times(a, b));
-        System.out.println("Thuong a+b la:");
+        System.out.println("Thuong a/b la:");
         System.out.println(Div(a, b));
+        System.out.println("Luy thua a^b la: "+ Math.pow(a,b));
     }
 
     public static double Sum(double a, double b) {
