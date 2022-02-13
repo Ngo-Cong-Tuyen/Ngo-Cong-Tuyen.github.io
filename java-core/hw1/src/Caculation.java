@@ -1,5 +1,5 @@
 import java.util.Scanner;
-
+import java.lang.Math;
 public class Caculation {
     public static void main(String[] args) {
         Scanner scanner= new Scanner(System.in);
@@ -39,5 +39,14 @@ public class Caculation {
 
     public static double FtoC(double t){
         return (t-32)/1.8;
+    }
+
+    public static double Pythagore(double a, double b){
+        double c= Math.sqrt((a*a+b*b));
+        return c;
+    }
+
+    public static double BMI(double weight, double height){
+        return (weight/(height*height));
     }
 }
