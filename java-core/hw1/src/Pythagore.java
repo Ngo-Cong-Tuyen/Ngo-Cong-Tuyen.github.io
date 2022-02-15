@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.lang.Math;
+
 public class Pythagore {
     public static void main(String[] args) {
         Scanner scanner= new Scanner(System.in);
@@ -6,7 +8,7 @@ public class Pythagore {
         double a= scanner.nextDouble();
         double b= scanner.nextDouble();
         System.out.println("Canh huyen tam giac vuong la:");
-        System.out.println(Caculation.Pythagore(a,b));
+        System.out.println(Math.sqrt(a*a+b*b));
 
     }
 
