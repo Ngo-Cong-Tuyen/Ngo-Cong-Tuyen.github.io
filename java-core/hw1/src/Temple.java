@@ -4,6 +4,7 @@ public class Temple {
         Scanner scanner= new Scanner(System.in);
         System.out.println("Ban muon chuyen doi tu do C sang do F true or flase?");
         boolean bl= scanner.nextBoolean();
+
         if (bl==true) {
             System.out.println("Nhap nhiet do C:");
             double t= scanner.nextDouble();

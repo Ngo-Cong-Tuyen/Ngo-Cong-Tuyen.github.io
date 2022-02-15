@@ -8,8 +8,8 @@ public class BMI {
         System.out.println("Your height:");
         double height= scanner.nextDouble();
         double BMI= Caculation.BMI(weight, height);
-        System.out.println("Your Body Mass Index: "+ BMI);
-
+        System.out.printf("Your Body Mass Index: %.2f", BMI);
+        System.out.println();
         if (BMI < 18.5){
             System.out.println("Underweight");
         } else if (BMI>=18.5 && BMI< 25) {

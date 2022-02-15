@@ -1,6 +1,8 @@
 import java.util.Scanner;
 import java.lang.Math;
+
 public class Caculation {
+
     public static void main(String[] args) {
         Scanner scanner= new Scanner(System.in);
         System.out.println( "Nhap gia tri cua a:");
@@ -8,7 +10,8 @@ public class Caculation {
         System.out.println("Nhap gia tri cua b:");
         double b= scanner.nextDouble();
         System.out.println("Tong a+b la:");
-        System.out.println(Sum(a, b));
+        Caculation tuyen= new Caculation();
+        System.out.println(tuyen.Sum(a,b));
         System.out.println("Hieu a-b la:");
         System.out.println(Sub(a, b));
         System.out.println("Tich a*b la:");
@@ -18,7 +21,8 @@ public class Caculation {
         System.out.println("Luy thua a^b la: "+ Math.pow(a,b));
     }
 
-    public static double Sum(double a, double b) {
+
+    public double Sum(double a, double b) {
        return a+b;
     }
 
