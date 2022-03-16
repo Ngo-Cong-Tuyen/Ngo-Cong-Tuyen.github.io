@@ -13,7 +13,7 @@ public class Library {
         this.soLuong = soLuong;
     }
 
-    public int getMaSach() {
+          public int getMaSach() {
         return maSach;
     }
 
