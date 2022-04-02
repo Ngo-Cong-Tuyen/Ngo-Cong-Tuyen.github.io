@@ -1,0 +1,101 @@
+[{
+  "id": 1,
+  "title": "Which Way Is the Front Line From Here?  The Life and Time of Tim Hetherington",
+  "description": "Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.",
+  "author": "Gale Phipson",
+  "catagory": "Documentary",
+  "publishing_year": 1989,
+  "publishing_company": "Mohr, Waters and Ernser",
+  "page_number": 51,
+  "amount": 9
+}, {
+  "id": 2,
+  "title": "Bunnyman",
+  "description": "Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.",
+  "author": "Irene Tadgell",
+  "catagory": "Horror",
+  "publishing_year": 1988,
+  "publishing_company": "Bashirian Group",
+  "page_number": 99,
+  "amount": 5
+}, {
+  "id": 3,
+  "title": "Winterhawk",
+  "description": "Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.",
+  "author": "Alexine Veazey",
+  "catagory": "Western",
+  "publishing_year": 1998,
+  "publishing_company": "Schinner, Kiehn and Mraz",
+  "page_number": 57,
+  "amount": 6
+}, {
+  "id": 4,
+  "title": "Barefoot Executive, The",
+  "description": "Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.",
+  "author": "Chadwick Walesby",
+  "catagory": "Children|Comedy",
+  "publishing_year": 2005,
+  "publishing_company": "Kautzer-Nolan",
+  "page_number": 93,
+  "amount": 7
+}, {
+  "id": 5,
+  "title": "Palindromes",
+  "description": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.",
+  "author": "Lowell Wilkisson",
+  "catagory": "Adventure|Comedy|Drama",
+  "publishing_year": 2009,
+  "publishing_company": "Cormier-Daugherty",
+  "page_number": 52,
+  "amount": 1
+}, {
+  "id": 6,
+  "title": "Belle toujours",
+  "description": "In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.",
+  "author": "Evyn Conre",
+  "catagory": "Drama",
+  "publishing_year": 2008,
+  "publishing_company": "Schaefer Inc",
+  "page_number": 53,
+  "amount": 7
+}, {
+  "id": 7,
+  "title": "Luxo Jr.",
+  "description": "Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.",
+  "author": "Michal Spillane",
+  "catagory": "Animation|Children",
+  "publishing_year": 1997,
+  "publishing_company": "Cummerata-Reilly",
+  "page_number": 98,
+  "amount": 2
+}, {
+  "id": 8,
+  "title": "Last Mogul, The",
+  "description": "In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.",
+  "author": "Carling Hayley",
+  "catagory": "Documentary",
+  "publishing_year": 1993,
+  "publishing_company": "Wunsch-Larkin",
+  "page_number": 87,
+  "amount": 1
+}, {
+  "id": 9,
+  "title": "Caesar (Julius Caesar)",
+  "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.",
+  "author": "Baudoin Burkart",
+  "catagory": "Drama|War",
+  "publishing_year": 1999,
+  "publishing_company": "Tillman, Beer and Botsford",
+  "page_number": 58,
+  "amount": 8
+}, {
+  "id": 10,
+  "title": "Siberian Education (Educazione siberiana)",
+  "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.",
+  "author": "Sammy Cleft",
+  "catagory": "Drama",
+  "publishing_year": 1990,
+  "publishing_company": "Metz-Brakus",
+  "page_number": 58,
+  "amount": 4
+}]
