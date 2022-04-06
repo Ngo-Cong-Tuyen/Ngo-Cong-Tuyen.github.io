@@ -6,24 +6,25 @@ import java.io.FileReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class BookRepo  {
+public class BookRepo {
 
-    public  ArrayList <? extends Book>  getBook(String typeBook, ) {
+    public  void getBook(ArrayList<? extends Book> list) {
         Gson gson=new Gson();
-        ArrayList<? extends Book> list= new ArrayList<>();
-
+        ArrayList<Textbook> list= new ArrayList<>();
         try {
-            FileReader reader = new FileReader(typeBook);
+            FileReader reader = new FileReader("Textbook.json");
 
-            Type type = new TypeToken<ArrayList<? extends Book>>(){}.getType();
+            Type type = new TypeToken<list>(){}.getType();
+
+            System.out.println(type);
 
             list = gson.fromJson(reader, type);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-//        for (Book b : list) {
-//            System.out.println(b);
-//        }
+
         return  list;
     }
+
+
 }

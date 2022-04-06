@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException{
 
         BookRepo repo = new BookRepo();
-        ArrayList<Textbook> list = repo.getBook("Textbook.json", Textbook );
+        ArrayList<Textbook> list = repo.getBook();
         for (Textbook b: list) {
             System.out.println(b);
         }
