@@ -31,9 +31,6 @@ public class _841_Keys_and_Rooms {
                 }
             }
         }
-        System.out.println(set);
-        System.out.println(set.size());
-        System.out.println(rooms.size());
         if (set.size() == rooms.size()) return true; else return false;
     }
 }
