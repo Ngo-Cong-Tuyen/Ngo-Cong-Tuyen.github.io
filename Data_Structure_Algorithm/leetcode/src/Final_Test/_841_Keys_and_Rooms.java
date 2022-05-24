@@ -12,6 +12,9 @@ public class _841_Keys_and_Rooms {
         Collections.addAll(arrayList1,2);
         rooms.add(arrayList1);
         System.out.println(canVisitAllRooms(rooms));
+        String s= "Tuyeền";
+        s.substring(0,1);
+
 
     }
 
