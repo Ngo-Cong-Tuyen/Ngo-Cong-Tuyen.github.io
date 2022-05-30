@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let numbers = [4, 2, 5, 6, 2, 7];
+        function checkNumber(arr) {
+            let a = [];
+            for (const i of arr) {
+                a.push(i % 2);
+            }
+            return a;
+        }
+
+        function doubleNumber(arr) {
+            let a = [];
+            for (const i of arr) {
+                a.push(i * 2);
+            }
+            return a;
+        }
+
+        function repeatString(s) {
+
+        }
+
+        // Bài tập về nhà.
+        // Bài 1: Viết function để kiểm tra 1 giá trị có nằm trong mảng hay không?
+
+        function checkElementExist(a, value) {
+            for (let i of a) {
+                if (i == value) return true;
+            }
+            return false;
+        }
+
+        // let a = [1,2,3,4,5];
+        // checkElementExist(a,5);
+
+        // Bài 2: Viết function truyền vào 1 mảng các số, và 1 giá trị bất kỳ. Trả về mảng mới với các giá trị lớn hơn giá trị truyền vào
+        function getElementGreater(a, value) {
+            let result = [];
+            a.forEach(element => {
+                if (element > value) result.push(element);
+            });
+            return result;
+        }
+
+        // getElementGreater(a,3);
+
+        // Bài 3: Viết function để tạo mã màu HEX ngẫu nhiên
+        const random_hex_color_code = () => {
+            let n = (Math.random() * 0xfffff * 1000000).toString(16);
+            return '#' + n.slice(0, 6);
+        };
+
+        console.log(random_hex_color_code())
+
+        /*
+        Giải thích:
+        Math.random() : tạo ra 1 số trong khoảng [0,1);
+        * 0xffffff : scale số đó lên trong khoảng [0,ffffff) của mã màu hex;
+        * 1000000 : để đưa nó về dạng có 6 chữ số 000001;
+        * to string(16): chuyển nó về dạng chuỗi hệ hexadecimal;
+        * n.slice trả về 6 số đầu;
+         */
+    </script>
+</body>
+
+</html>
