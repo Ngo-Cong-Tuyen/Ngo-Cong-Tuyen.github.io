@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let arr = ["Nam", "thang", "Tuyen", "Khanh"];
+
+        arr.sort(function (a, b) {
+            return a.toUpperCase().localeCompare(b.toUpperCase);
+        })
+        console.log(arr);
+
+        let students = [
+            {
+                name: "Thang",
+                age: 20,
+                gender: "Male",
+            },
+
+            {
+                name: "Tuyen",
+                age: 20,
+                gender: "Male",
+            },
+
+            {
+                name: "Khanh",
+                age: 18,
+                gender: "Male",
+            }
+        ]
+
+        function caculateStudentAverageAge(list) {
+            let sum = 0;
+            for (let st of list) {
+                if (st.age != undefined) sum += st.age;
+            }
+            return sum / list.length;
+        }
+
+        caculateStudentAverageAge(students);
+
+        let products = [
+            {
+                name: "Iphone 13 Pro Max", // Tên sản phẩm
+                price: 3000000, // Giá mỗi sản phẩm
+                brand: "Apple", // Thương hiệu
+                count: 2, // Số lượng sản phẩm trong giỏ hàng
+            },
+            {
+                name: "Samsung Galaxy Z Fold3",
+                price: 41000000,
+                brand: "Samsung",
+                count: 1,
+            },
+            {
+                name: "IPhone 11",
+                price: 15500000,
+                brand: "Apple",
+                count: 1,
+            },
+            {
+                name: "OPPO Find X3 Pro",
+                price: 19500000,
+                brand: "OPPO",
+                count: 3,
+            },
+        ]
+
+
+
+        // Bài tập về nhà:
+        // 6. Thêm 1 sản phẩm bất kỳ vào trong mảng product
+        function newProduct(){
+            let name = prompt("Push the name of the product:");
+            let price = parseInt(prompt("Enter the price of the product:"));
+            let brand = prompt("Enter the brand of the product:");
+            let count = parseInt(("Enter the count of the product:"));
+            item = {name,price,brand,count};
+            return item;
+        }
+        products.push(newProduct());
+
+        // 7. Xóa tất cả sản phẩm của thương hiệu "Samsung" trong giỏ hàng
+        let brand = prompt("Enter the brand you want to remove:");
+        products.filter(function(item){
+            return item.brand != brand;
+        });
+        
+        // 8. Sắp xếp giỏ hàng theo price tăng dần
+        [...products].sort(function(a,b) {
+            return a.price - b.price;
+        });
+
+        // 9. Sắp xếp giỏ hàng theo count giảm dần
+
+        [...products].sort(function(a,b) {
+            return b.count - a.count;
+        });
+
+        // 10. Lấy ra 2 sản phẩm bất kỳ trong giỏ hàng.
+        function getTwoItemsRamdomly(list){
+            let a = Math.floor(Math.random()*list.length);
+            let b = Math.floor(Math.random()*list.length);
+            return [list[a],list[b]];
+        };
+        getTwoItemsRamdomly(products);
+
+    </script>
+</body>
+
+</html>
