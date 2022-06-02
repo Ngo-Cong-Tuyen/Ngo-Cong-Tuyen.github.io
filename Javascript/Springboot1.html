@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1 id="heading">Xin chao cac ban</h1>
+    <div class="content">
+        <p class="para">para 1</p>
+        <p class="para">para 2</p>
+        <p style="display: none;">para 3</p>
+        <p>para 4</p>
+    </div>
+
+    <script>
+        let h1 = document.getElementById('heading');
+        console.log(h1);
+
+        let paras = document.getElementsByClassName('para');
+        console.log(paras[1]);
+
+        let paras1 = document.getElementsByTagName('p');
+        console.log(paras1[3]);
+
+        let para = document.querySelector('.para');
+        console.log(para);
+
+        let p = document.querySelector('p');
+        console.log(p);
+
+        let para3 = document.querySelector('.content p:last-child');
+        console.log(para3);
+
+        let allPara = document.querySelectorAll('p');
+        console.log(allPara[2]);
+
+        let content = document.querySelector('.content');
+        console.log(content);
+        console.log(content.innerHTML);
+        console.log(content.innerText);
+        console.log(content.textContent);
+
+        h1.innerText = "Hello";
+        h1.innerHTML = "<input placeholder='name' />";
+        h1.textContent = "Xin chao cac ban";
+
+        h1.style.color = 'red';
+
+        Array.from(allPara).map(ele => ele.style.color = 'blue');
+
+        const newPara1 = document.createElement('p');
+        newPara1.innerText = "New para 1";
+
+        document.body.prepend(newPara1);
+
+        const newPara2 = document.createElement('p');
+        newPara2.innerText = "New para 2";
+
+        document.body.appendChild(newPara2);
+
+        const heading = document.createElement('h2');
+        heading.innerText = "Các bạn có khỏe không?";
+
+        document.body.insertBefore(heading, content);
+
+        document.body.insertAdjacentElement('beforebegin',heading);
+        newPara1.parentNode.removeChild(newPara1);
+    </script>
+</body>
+
+</html>

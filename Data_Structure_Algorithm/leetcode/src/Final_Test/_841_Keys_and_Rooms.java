@@ -4,18 +4,20 @@ import java.util.*;
 
 public class _841_Keys_and_Rooms {
     public static void main(String[] args) {
-        List<List<Integer>> rooms = new ArrayList<>();
-        ArrayList<Integer>arrayList = new ArrayList<>();
-        Collections.addAll(arrayList,1);
-        rooms.add(arrayList);
-        ArrayList<Integer>arrayList1 = new ArrayList<>();
-        Collections.addAll(arrayList1,2);
-        rooms.add(arrayList1);
-        System.out.println(canVisitAllRooms(rooms));
-        String s= "Tuyeền";
-        s.substring(0,1);
-
-
+////        List<List<Integer>> rooms = new ArrayList<>();
+////        ArrayList<Integer>arrayList = new ArrayList<>();
+////        Collections.addAll(arrayList,1);
+////        rooms.add(arrayList);
+////        ArrayList<Integer>arrayList1 = new ArrayList<>();
+////        Collections.addAll(arrayList1,2);
+////        rooms.add(arrayList1);
+////        System.out.println(canVisitAllRooms(rooms));
+////        String s= "Tuyeền";
+////        s.substring(0,1);
+//        int[] a = {1,2,3};
+//        ArrayList<Integer> ar = new ArrayList<>();
+//        ar.
+//        System.out.println(Arrays.toString(a));
     }
 
     public static boolean canVisitAllRooms(List<List<Integer>> rooms) {
