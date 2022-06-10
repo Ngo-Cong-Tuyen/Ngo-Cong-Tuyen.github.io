@@ -16,14 +16,14 @@ function newBox(color) {
     let box = document.createElement('div');
     box.classList.add('box');
     box.style.backgroundColor = color;
-    box.addEventListener('click', ()=>{
+    box.addEventListener('click', () => {
         box.parentNode.removeChild(box);
         fCount();
     });
     return box;
 }
 
-moreBoxesEl.addEventListener('click', () =>{
+moreBoxesEl.addEventListener('click', () => {
     for (let cl of colors) boxesEL.appendChild(newBox(cl));
     fCount();
 })

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Techmaster</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Dropdown
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Breadcrumb -->
+    <section class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb ">
+                <li class="breadcrumb-item"><a class="text-dark" href="#">Home</a></li>
+                <li class="breadcrumb-item"><a class="text-dark" href="#">Library</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Data</li>
+            </ol>
+        </nav>
+    </section>
+    <!-- Content -->
+    <section class="container">
+        <h1>Giải thích các Annotations trong SpringBoot (Phần 1)</h1>
+        <img src="https://media.techmaster.vn/api/static/c5l7m5fk0cmm38nmgv2g/fiGkPnwl" alt="">
+        <h2>Chú thích của Spring Framework</h2>
+        <p>
+            Ngôn ngữ lập trình Java cung cấp hỗ trợ cho các chú thích từ Java 5.0. Các khung công tác Java hàng đầu đã
+            nhanh chóng chấp nhận các chú thích và Spring Framework bắt đầu sử dụng các chú thích từ bản phát hành 2.5.
+            Do cách chúng được định nghĩa, các chú thích cung cấp rất nhiều ngữ cảnh trong phần khai báo của chúng.
+
+            Trước khi có chú thích, hành vi của Spring Framework được kiểm soát phần lớn thông qua cấu hình XML. Ngày
+            nay, việc sử dụng các chú thích cung cấp cho chúng ta những khả năng to lớn trong cách chúng ta định cấu
+            hình các hành vi của Spring Framework.
+
+            Trong bài đăng này, chúng ta sẽ xem xét các chú thích có sẵn trong Spring Framework.
+        </p>
+        <h2>Chú thích của Core Spring Framework</h2>
+        <h3>@Required</h3>
+        <p>Chú thích này được áp dụng trên các phương thức bean setter. Hãy xem xét một tình huống mà bạn cần thực thi
+            một thuộc tính bắt buộc. Chú thích @Required chỉ ra rằng bean bị ảnh hưởng phải được điền vào thời điểm cấu
+            hình với thuộc tính bắt buộc. Nếu không, một ngoại lệ của kiểu BeanInitializationException sẽ được ném ra.
+        </p>
+    </section>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

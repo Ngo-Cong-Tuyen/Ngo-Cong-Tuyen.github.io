@@ -1,0 +1,22 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+#header {
+    background-color: #30598c;
+    box-shadow: 0 4px 4px 0 rgb(0 0 0 / 25%);
+}
+
+.logo-brand img {
+    width: 120px;
+}
+
+@media (max-width: 1366px) {
+    .logo-brand img {
+        width: 100px;
+    }
+}
+
+img {
+    max-width: 100%;
+}

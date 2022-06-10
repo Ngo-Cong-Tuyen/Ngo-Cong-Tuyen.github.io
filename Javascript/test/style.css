@@ -1,0 +1,10 @@
+.container {
+    text-align: center;
+
+}
+.md-radio{
+    position: relative;
+}
+input {
+    margin-bottom: 100px;
+}

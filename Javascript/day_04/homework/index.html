@@ -40,13 +40,21 @@
         Array.from(list).map(ele => ele.style.color = 'blue');
 
         //Câu 3:
+        //Sửa nội dung cho thẻ <li> 1 thành màu đỏ (color)
 
+        // Sửa background cho thẻ <li> 3 thành màu xanh (background-color)
+
+        // Remove thẻ <li> 4
+
+        // Thêm thẻ <li> mới thay thế cho thẻ <li> 4 bị xóa ở bước trước, thẻ <li> mới có nội dung bất kỳ
         const ul2= document.getElementById('list');
         for (let i =8; i<=10; i++) {
             let li = document.createElement('li');
             li.innerText = `Item ${i}`;
             ul2.insertAdjacentElement("beforeend",li);
         }
+
+        
     </script>
 </body>
 
