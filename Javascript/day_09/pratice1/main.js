@@ -18,10 +18,6 @@ const renderBreedList = obj =>{
   
     let keys = Object.keys(obj);
 
-    // let html ="";
-    // for (let key of keys) {
-    //     html += `<option value ="${key}">${key}</option>`;
-    // }
     let html = "";
     for (let i=0; i<keys.length; i++){
         html += `<option value="${keys[i]}">${keys[i]}</option>`;
