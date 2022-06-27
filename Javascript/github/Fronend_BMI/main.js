@@ -16,7 +16,7 @@ getBtn.addEventListener("click", async function () {
 // Post
 postBtn.addEventListener("click", async function () {
   try {
-    if (checkValidate()) caculateBmi();
+    if (checkValidate()) caculateBmiPost();
   } catch (error) {
     console.log(error);
   }
@@ -26,7 +26,20 @@ async function caculateBmi() {
   let height = heightInput.value;
   let weight = weightInput.value;
   let res = await axios.get(
-    `http://localhost:8080/bmi?height=${height}&weight=${weight}`
+    `http://localhost:8080/bmi-get?height=${height}&weight=${weight}`
+  );
+  resultInPut.value = res.data;
+}
+
+async function caculateBmiPost() {
+  let height = heightInput.value;
+  let weight = weightInput.value;
+  let res = await axios.post(
+    `http://localhost:8080/bmi-post`,
+    {
+      weight: weight,
+      height: height
+    }
   );
   resultInPut.value = res.data;
 }

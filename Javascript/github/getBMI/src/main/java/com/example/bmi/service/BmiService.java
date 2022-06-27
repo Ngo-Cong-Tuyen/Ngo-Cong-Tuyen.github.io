@@ -1,26 +1,15 @@
 package com.example.bmi.service;
 
+import com.example.bmi.exception.BadRequestException;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BmiService {
-    public String checkBmi(float height, float weight ){
-        float BMI = weight/(height*height);
-        if (BMI < 18.5)
-        {
-            return "Thiếu cân";
+    public double getBmi(double height, double weight) {
+        // Kiểm tra weight hoặc height <= 0 --> BadRequestException
+        if (weight <= 0 || height <= 0) {
+            throw new BadRequestException("Cân nặng hoặc chiều cao phải >= 0");
         }
-        else if (BMI >= 18.5 && BMI <= 24.9)
-        {
-            return "Bình thường";
-        }
-        else if (BMI >= 25 && BMI <= 29.9)
-        {
-            return "Thừa cân";
-        }
-        else
-        {
-            return "Béo phì";
-        }
+        return weight / (height * height);
     }
 }
