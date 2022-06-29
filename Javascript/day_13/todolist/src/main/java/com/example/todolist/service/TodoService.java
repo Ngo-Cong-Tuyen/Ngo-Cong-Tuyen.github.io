@@ -55,7 +55,7 @@ public class TodoService {
 
     public Todo updateTodo(int id, UpdateTodoRequest request) {
         if (findTodoById(id).isEmpty()){
-            throw new BadRequestException("Khong tim thay todo co id ="+id);
+            throw new NotFoundException("Khong tim thay todo co id ="+id);
         }
         for (Todo todo: todos){
             if (todo.getId()==id){
@@ -69,7 +69,7 @@ public class TodoService {
 
     public void deleteTodo(int id) {
         if (findTodoById(id).isEmpty()){
-            throw new BadRequestException("Khong tim thay todo co id ="+id);
+            throw new NotFoundException("Khong tim thay todo co id ="+id);
         }
         todos.removeIf(todo -> todo.getId()==id);
     }
