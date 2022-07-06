@@ -47,6 +47,5 @@ supporterInfoDiv.innerHTML = `<p>
                             <button class="btn btn-primary shadow-sm">Nhận tư vấn</button>
                             </p>`;
 
-
-const courseDescriptionDiv = document.querySelector('.course-description');
+const courseDescriptionDiv = document.querySelector(".course-description");
 courseDescriptionDiv.innerHTML = `<p>${course.content}</p>`;

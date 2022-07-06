@@ -95,7 +95,7 @@ const toggleStatus = async (id) => {
     let todo = todos.find((t) => t.id == id);
 
     todo.status = !todo.status;
-    axios.put(`${API_URL}/${id}`, {
+    await axios.put(`${API_URL}/${id}`, {
       title: todo.title,
       status: todo.status,
     });
