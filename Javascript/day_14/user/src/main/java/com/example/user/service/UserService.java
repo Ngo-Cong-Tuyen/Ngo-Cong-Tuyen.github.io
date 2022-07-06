@@ -6,6 +6,7 @@ import com.example.user.exception.NotFoundException;
 import com.example.user.mapper.UserMapper;
 import com.example.user.model.User;
 import com.example.user.request.CreateUserRequest;
+import com.example.user.request.UpdateAvatarRequest;
 import com.example.user.request.UserPasswordRequest;
 import com.example.user.request.UserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,5 +162,13 @@ public class UserService {
 
     public void deleteFile(int id, String fileId) {
         fileService.deleteFile(id,fileId);
+    }
+
+    public String updateAvatar(int id, UpdateAvatarRequest request) {
+        User user = findUserById(id).orElseThrow(()->{
+            throw new NotFoundException("Khong ton tai user co id = "+id);
+        });
+        user.setAvatar(request.getAvatar());
+        return user.getAvatar();
     }
 }

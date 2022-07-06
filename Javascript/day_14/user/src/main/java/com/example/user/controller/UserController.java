@@ -2,6 +2,7 @@ package com.example.user.controller;
 
 import com.example.user.dto.UserDto;
 import com.example.user.request.CreateUserRequest;
+import com.example.user.request.UpdateAvatarRequest;
 import com.example.user.request.UserPasswordRequest;
 import com.example.user.request.UserRequest;
 import com.example.user.service.UserService;
@@ -96,6 +97,11 @@ public class UserController {
     @DeleteMapping("/users/{id}/files/{fileId}")
     public void deleteFile(@PathVariable int id, @PathVariable String fileId){
          userService.deleteFile(id,fileId);
+    }
+
+    @PutMapping("/users/{id}/update-avatar")
+    public String updateFile(@PathVariable int id, @RequestBody UpdateAvatarRequest request){
+        return userService.updateAvatar(id, request);
     }
 
 }
