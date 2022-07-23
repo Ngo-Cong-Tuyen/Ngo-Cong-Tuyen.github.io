@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(~{:: title},~{},~{:: #content},~{:: #js})}">
+
+<head>
+
+    <title>Haley, Bailey and Brakus</title>
+
+</head>
+
+<body>
+
+    <!-- BODY -->
+    <th:block id="content">
+        <div class="company-list mt-4 mb-4">
+            <div class="container">
+                <div class="mb-4">
+                    <a href="/admin/companies" class="btn-custom btn-refresh">
+                        <span><i class="fa-solid fa-angle-left"></i></span>
+                        Quay lại
+                    </a>
+                </div>
+
+                <div class="company-list-inner p-2">
+                    <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active fw-bold" id="company-tab" data-bs-toggle="tab"
+                                    data-bs-target="#company" type="button" role="tab" aria-controls="company"
+                                    aria-selected="true">Chi tiết công
+                                ty
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link fw-bold" id="job-tab" data-bs-toggle="tab" data-bs-target="#job"
+                                    type="button" role="tab" aria-controls="job" aria-selected="false">Danh sách công việc
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="company" role="tabpanel" aria-labelledby="company-tab">
+                            <div class="d-flex justify-content-between mb-4">
+                                <button class="btn-custom btn-update-company">
+                                    <span><i class="fa-solid fa-plus"></i></span>
+                                    Cập nhật
+                                </button>
+                                <button class="btn-custom btn-delete-company bg-danger">
+                                        <span><i class="fa-solid fa-trash-can"></i></span>
+                                        Xóa
+                                </button>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="mb-3">
+                                        <label for="company-name" class="form-label">Tên công ty</label>
+                                        <input type="text" class="form-control" id="company-name"
+                                               th:value="${company.name}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="company-website" class="form-label">Website</label>
+                                        <input type="text" class="form-control" id="company-website"
+                                               th:value="${company.website}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="company-email" class="form-label">Email</label>
+                                        <input type="text" class="form-control" id="company-email"
+                                               th:value="${company.email}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="company-description" class="form-label">Mô tả ngắn</label>
+                                        <textarea class="form-control" id="company-description"
+                                                  rows="3" th:text="${company.description}">Quis quos sunt rerum architecto eius commodi voluptatem esse excepturi impedit impedit adipisci nulla qui eligendi iure cum deserunt sit eos dicta consequuntur tempora similique est cum illo quia quidem iusto architecto quisquam.</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="company-city" class="form-label">Thành phố</label>
+                                        <select class="form-control" id="company-city"></select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Logo</label>
+                                        <div class="company-logo-preview mb-3 rounded">
+                                            <img th:src="${company.logoPath}"
+                                                 alt="Haley, Bailey and Brakus" id="company-logo-preview" class="rounded">
+                                        </div>
+
+                                        <label for="company-logo-input" class="btn btn-warning">Đổi logo</label>
+                                        <input type="file" id="company-logo-input" class="d-none">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="job" role="tabpanel" aria-labelledby="job-tab">
+                            <div class="mb-4">
+                                <a href="/admin/jobs/create" class="btn-custom btn-create-company">
+                                    <span><i class="fa-solid fa-plus"></i></span>
+                                    Tạo công việc
+                                </a>
+                            </div>
+
+                            <table class="table job-table">
+                                <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên công việc</th>
+                                    <th>Kỹ năng</th>
+                                    <th>Mức lương</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>
+                                        <a href="/admin/jobs/1">Legacy IT Agent</a>
+                                    </td>
+                                    <td>
+                                        <span class="me-1 badge bg-warning text-dark">Devops</span><span
+                                            class="me-1 badge bg-warning text-dark">Vue</span><span
+                                            class="me-1 badge bg-warning text-dark">Angular</span>
+                                    </td>
+                                    <td>29,194,223 VNĐ</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>
+                                        <a href="/admin/jobs/5">Product Orchestrator</a>
+                                    </td>
+                                    <td>
+                                        <span class="me-1 badge bg-warning text-dark">Javascript</span><span
+                                            class="me-1 badge bg-warning text-dark">AWS</span>
+                                    </td>
+                                    <td>16,353,245 VNĐ</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>=
+            </div>
+        </div>
+    </th:block>
+
+    <th:block id="js">
+        <script th:inline="javascript">
+            console.log("Hello");
+            let company = [[ ${company} ]];
+            const updateBtn = document.querySelector(".btn-update-company")
+            const deleteCompanyBtn = document.querySelector(".btn-delete-company");
+            const companyLogoInput = document.getElementById("company-logo-input");
+            const provincesEl = document.getElementById("company-city");
+            const companyNameInput = document.getElementById("company-name");
+            const companyWebsiteInput = document.getElementById("company-website");
+            const companyEmailInput = document.getElementById("company-email");
+            const companyDescriptionEl = document.getElementById("company-description");
+            const getProvinces = async () =>{
+                try {
+                    //goi tinh thanh pho
+                    let res = await axios.get('https://provinces.open-api.vn/api/p/');
+                    console.log(res);
+                    // hien thi
+                    renderProvinces(res.data);
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+
+            const renderProvinces = arr =>{
+
+                let html ="";
+                for (let pr of arr) {
+                    html += `<option value ="${pr.name}">${pr.name}</option>`;
+                }
+
+                provincesEl.innerHTML = html;
+                provincesEl.value = company.city;
+            }
+            getProvinces();
+
+            deleteCompanyBtn.addEventListener('click',async () =>{
+                try {
+                    let res = await axios.delete(`/admin/api/admin/companies/${company.id}`);
+                    window.location.href = "/admin/companies";
+                } catch (error) {
+                    console.log(error);
+                }
+            })
+
+            companyLogoInput.addEventListener('change', function () {
+                let filePath= this.files[0];
+                var path = (window.URL || window.webkitURL).createObjectURL(filePath);
+                console.log(path);
+            })
+
+            updateBtn.addEventListener('click', async () => {
+                console.log(companyDescriptionEl.value);
+                console.log("hello");
+                try{
+                    let res = await axios.put(`/admin/api/admin/companies/${company.id}`,{
+                        name: companyNameInput.value,
+                        logoPath: companyLogoInput.value,
+                        website: companyWebsiteInput.value,
+                        email: companyEmailInput.value,
+                        description: companyDescriptionEl.value,
+                        city: provincesEl.value
+                    })
+                } catch (error) {
+                    console.log(error);
+                }
+            })
+        </script>
+    </th:block>
+
+
+</body>
+
+</html>

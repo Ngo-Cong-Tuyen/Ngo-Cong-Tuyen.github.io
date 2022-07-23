@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(~{:: title},~{:: #css},~{:: #content},~{:: #js})}">
+
+<head>
+
+    <title>Legacy IT Agent</title>
+
+    <!-- Components CSS -->
+    <th:block id="css">
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+    </th:block>
+
+</head>
+
+<body>
+
+
+    <!-- BODY -->
+    <th:block id="content">
+        <div class="job-container mt-4 mb-4">
+            <div class="container">
+                <div class="mb-4">
+                    <a href="/admin/jobs" class="btn-custom btn-refresh">
+                        <span><i class="fa-solid fa-angle-left"></i></span>
+                        Quay lại
+                    </a>
+                </div>
+
+                <div class="job-list-inner p-2">
+                    <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active fw-bold" id="job-tab" data-bs-toggle="tab" data-bs-target="#job"
+                                    type="button" role="tab" aria-controls="job" aria-selected="true">Chi tiết công
+                                việc
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link fw-bold" id="applicant-tab" data-bs-toggle="tab"
+                                    data-bs-target="#applicant" type="button" role="tab" aria-controls="applicant"
+                                    aria-selected="false">Danh sách ứng viên
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="job" role="tabpanel" aria-labelledby="job-tab">
+                            <div class="d-flex justify-content-between mb-4">
+                                <button class="btn-custom btn-update-job">
+                                    <span><i class="fa-solid fa-plus"></i></span>
+                                    Cập nhật
+                                </button>
+                                <button class="btn-custom btn-delete-job bg-danger">
+                                    <span><i class="fa-solid fa-trash-can"></i></span>
+                                    Xóa
+                                </button>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="mb-3">
+                                        <label for="job-title" class="form-label">Tên công việc</label>
+                                        <input type="text" class="form-control" id="job-title" th:value="${job.title}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="job-description" class="form-label">Mô tả ngắn</label>
+                                        <textarea class="form-control" id="job-description"
+                                                  rows="10" th:text="${job.description}">A neque qui aliquid minus in alias excepturi iusto magni laboriosam quo quos voluptatum possimus asperiores natus facere et dolorem consequatur quo quia voluptatum facilis odit cum eaque ratione repudiandae consectetur neque qui qui saepe omnis optio numquam recusandae accusamus et voluptatem laboriosam ex necessitatibus pariatur occaecati ab et reiciendis quaerat hic quo vero velit minus placeat rerum soluta sed deserunt quod itaque debitis sequi labore voluptatem possimus quas quibusdam et quo omnis voluptatibus ab et dolorem quaerat enim aperiam praesentium cupiditate consectetur quasi maxime dicta et et enim similique in ut vitae aut occaecati cum eveniet odit enim similique non.</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="job-skill" class="form-label">Kỹ năng</label>
+                                        <select id="job-skill" class="form-control" multiple="multiple">
+                                            <option value="Javascript">Javascript</option>
+                                            <option value="Java">Java</option>
+                                            <option value="Golang">Golang</option>
+                                            <option value="PHP">PHP</option>
+                                            <option value="React">React</option>
+                                            <option value="AWS">AWS</option>
+                                            <option th:value="${skill}" th:each="skill: ${job.skills}" th:text="${skill}">AWS</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="job-company" class="form-label">Công ty</label>
+                                        <select id="job-company" class="form-control">
+                                            <option th:value="${company.id}" th:each="company : ${companies}" th:text="${company.name}" th:selected="${job.companyDto.id}== ${company.id}">Haley, Bailey and Brakus</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="job-salary" class="form-label">Mức lương</label>
+                                        <input type="text" class="form-control" id="job-salary" th:value="${T(com.example.jobhunt.util.Utils).money(job.salary)}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="applicant" role="tabpanel" aria-labelledby="applicant-tab">
+
+                            <table class="table applicant-table">
+                                <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên ứng viên</th>
+                                    <th>Mô tả ngắn</th>
+                                    <th>Link CV</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Noah Lott</td>
+                                    <td class="w-50">Deleniti praesentium laborum et fugiat ea enim aliquid corporis
+                                        architecto soluta numquam beatae earum quae ad id ut recusandae aut eveniet et
+                                        aliquam voluptate voluptatem totam deleniti quia est eveniet qui porro quam
+                                        blanditiis harum molestias impedit et veritatis voluptas magni voluptate nisi
+                                        porro eveniet rem esse sit perspiciatis qui.</td>
+                                    <td><a href="" target="_blank">Xem chi tiết</a></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Penny Bunn</td>
+                                    <td class="w-50">Qui ab et provident quo architecto sint voluptatum error dolorem
+                                        consequatur iusto ut libero occaecati et harum accusantium non veritatis eum
+                                        sunt perferendis repellendus quasi illum dignissimos quia ea in quaerat facere
+                                        dicta in vero ut qui distinctio vitae velit quis quae eveniet iure saepe
+                                        laboriosam qui sint quas magnam sunt omnis id dicta.</td>
+                                    <td><a href="" target="_blank">Xem chi tiết</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+
+
+    <th:block id="js">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+                integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+                crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                $("#job-skill").select2();
+                const updateJobBtn = document.querySelector(".btn-update-job");
+                const jobSkillSelect = document.getElementById("job-skill");
+            });
+        </script>
+        <script th:inline="javascript">
+            let job = [[ ${job} ]];
+            const deleteBtn = document.querySelector(".btn-delete-job");
+            const updateBtn = document.querySelector(".btn-update-job");
+            const jobTitleEl = document.getElementById("job-title");
+            const jobDescriptionEl = document.getElementById('job-description');
+            const jobCompanyEl = document.getElementById("job-company");
+            const jobSalary = document.getElementById("job-salary");
+            let skill = job.skills;
+            console.log(skill);
+            $('#job-skill').val(skill);
+            $('#job-skill').trigger('change');
+            deleteBtn.addEventListener('click', async ()=>{
+                try{
+                    await axios.delete(`/api/admin/jobs/${job.id}`);
+                    toastr.success("Xoa thanh cong")
+                    setTimeout(function (){
+                        window.location.href = "/admin/jobs";
+                    }, 1500);
+
+                } catch (e) {
+                    console.log(e);
+                }
+            })
+
+            updateBtn.addEventListener('click',async ()=>{
+                try{
+                    let skill= $('#job-skill').val(); // Select the option with a value of '1'
+                    let salary= parseInt(jobSalary.value.replace(/\D/g,''));
+                    await axios.put(`/api/admin/jobs/${job.id}`,{
+                        title: jobTitleEl.value,
+                        description: jobDescriptionEl.value,
+                        skills: skill,
+                        salary: salary,
+                        companyId : jobCompanyEl.value
+                    });
+                    toastr.success("Cap nhat thanh cong thanh cong")
+                    setTimeout(function (){
+                        window.location.href = "/admin/jobs";
+                    }, 1500);
+
+                } catch (e) {
+                    console.log(e);
+                }
+            })
+        </script>
+    </th:block>
+
+    <!-- Components JS -->
+
+
+
+
+</body>
+
+</html>

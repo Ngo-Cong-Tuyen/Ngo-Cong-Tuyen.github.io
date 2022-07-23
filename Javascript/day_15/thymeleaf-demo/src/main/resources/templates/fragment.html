@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fragment</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{index :: menu}"></div>
+<th:block th:replace="~{/fragment/menu :: avatar(~{fragment/menu :: #image1})}"></th:block>
+<th:block th:replace="~{/fragment/menu :: avatar(~{fragment/menu :: #para1})}"></th:block>
+
+</body>
+</html>

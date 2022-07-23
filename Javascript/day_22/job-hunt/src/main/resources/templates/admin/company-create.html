@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(~{:: title},~{:: #css},~{:: #content},~{:: #js})}">
+
+<head>
+    <title>Tạo công ty</title>
+</head>
+
+<body>
+
+    <!-- BODY -->
+    <th:block id="content">
+        <div class="company-list mt-4 mb-4">
+            <div class="container">
+                <div class="mb-4">
+                    <button class="btn-custom btn-create-company">
+                        <span><i class="fa-solid fa-plus"></i></span>
+                        Tạo
+                    </button>
+                    <a href="/admin/companies" class="btn-custom btn-refresh">
+                        <span><i class="fa-solid fa-angle-left"></i></span>
+                        Quay lại
+                    </a>
+                </div>
+
+                <div class="company-list-inner p-2">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="mb-3">
+                                <label for="company-name" class="form-label">Tên công ty</label>
+                                <input type="text" class="form-control" id="company-name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="company-website" class="form-label">Website</label>
+                                <input type="text" class="form-control" id="company-website">
+                            </div>
+                            <div class="mb-3">
+                                <label for="company-email" class="form-label">Email</label>
+                                <input type="text" class="form-control" id="company-email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="company-description" class="form-label">Mô tả ngắn</label>
+                                <textarea class="form-control" id="company-description" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="company-city" class="form-label">Thành phố</label>
+                                <select class="form-control" id="company-city"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+
+    <th:block id="js">
+        <script th:inline="javascript">
+            console.log("Hello");
+            const provincesEl = document.getElementById("company-city");
+            const companyNameInput = document.getElementById("company-name");
+            const companyWebsiteInput = document.getElementById("company-website");
+            const companyEmailInput = document.getElementById("company-email");
+            const companyDescriptionEl = document.getElementById("company-description");
+            const createBtn = document.querySelector(".btn-create-company");
+            const getProvinces = async () =>{
+                try {
+                    //goi tinh thanh pho
+                    let res = await axios.get('https://provinces.open-api.vn/api/p/');
+                    console.log(res);
+                    // hien thi
+                    renderProvinces(res.data);
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+
+            const renderProvinces = arr =>{
+
+                let html ="";
+                for (let pr of arr) {
+                    html += `<option value ="${pr.name}">${pr.name}</option>`;
+                }
+
+                provincesEl.innerHTML = html;
+            }
+            getProvinces();
+
+            createBtn.addEventListener('click', async () => {
+                try{
+                    let res = await axios.post('/admin/api/admin/companies',{
+                       name: companyNameInput.value,
+                       website: companyWebsiteInput.value,
+                        email: companyEmailInput.value,
+                        description: companyDescriptionEl.innerText,
+                        city: provincesEl.value
+                    })
+                } catch (error) {
+                    console.log(error);
+                }
+            })
+        </script>
+</body>
+
+</html>

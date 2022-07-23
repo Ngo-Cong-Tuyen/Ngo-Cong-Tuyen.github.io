@@ -159,11 +159,21 @@ btnModalImage.addEventListener("click", async () => {
     listImage = res.data;
 
     // Hiển thị ra ngoài giao diện
-    renderImg(listImage);
+    
   } catch (error) {
     console.log(error);
   }
 });
+
+const renderImgaeAndPagination = arr =>{
+  $('.pagination-container').pagination({
+    dataSource: arr,
+    pageSize:12,
+    callback: function(data) {
+        renderImg(data);
+    }
+  })
+}
 
 // Hiển thị danh sách hình ảnh ra ngoài giao diện
 function renderImg(arr) {
@@ -173,7 +183,7 @@ function renderImg(arr) {
   arr.forEach((i) => {
     html += `
             <div class="image-item" onclick="choseImage(this)">
-                <img src="http://localhost:8080/${i}" alt="">
+                <img src="http://localhost:8080/${i}" alt="" data-src="${i}">
             </div>
         `;
   });
@@ -211,6 +221,7 @@ btnChoseImage.addEventListener("click", async function (event) {
     let res = await axios.put(`http://localhost:8080/api/v1/users/${userId}/update-avatar`,{
       avatar: avatarPreviewEl.src
     });
+    modelImageConfig.hide();
     console.log(res);
   } catch (error) {
     console.log(error);
@@ -220,9 +231,13 @@ btnChoseImage.addEventListener("click", async function (event) {
 btnDeleteImage.addEventListener("click", async () => {
   try {
     let imageSelected = document.querySelector(".selected img");
-    let res = await axios.delete(`${imageSelected.src}`);
-    imageContainerEl.removeChild(imageSelected.parentNode);
+    await axios.delete(`${imageSelected.src}`);
+
   } catch (error) {
     console.log(error);
   }
 });
+
+var modelImageConfig = new bootstrap.Modal(document.getElementById('modal-image'), {
+  keyboard: false
+})

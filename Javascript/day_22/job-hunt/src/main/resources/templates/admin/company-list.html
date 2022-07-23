@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(~{:: title},~{},~{:: #content},~{})}">
+
+<head>
+
+    <title>Danh sách công ty</title>
+
+    <!-- Link tự viết -->
+</head>
+
+<body>
+    <!-- BODY -->
+    <th:block id="content">
+        <div class="company-list mt-4 mb-4">
+            <div class="container">
+                <div class="mb-4">
+                    <a th:href="@{/admin/companies/create}" class="btn-custom btn-create-company">
+                        <span><i class="fa-solid fa-plus"></i></span>
+                        Tạo công ty
+                    </a>
+                    <a href="/admin/companies" class="btn-custom btn-refresh">
+                        <span><i class="fa-solid fa-arrow-rotate-right"></i></span>
+                        Refresh
+                    </a>
+                </div>
+
+                <div class="company-list-inner p-2">
+                    <table class="table company-table">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên công ty</th>
+                            <th>Thành phố</th>
+                            <th>Email</th>
+                            <th>Website</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="company, state: ${companies}">
+                            <td th:text="${state.index}+1">1</td>
+                            <td>
+                                <a th:href="@{/admin/companies/{id} (id=${company.id})}" th:text="${company.name}">Haley, Bailey and Brakus</a>
+                            </td>
+                            <th th:text="${company.city}">Thành phố Hồ Chí Minh</th>
+                            <td th:text="${company.email}">korey.hayes@yahoo.com</td>
+                            <td>
+                                <a th:href="${company.website}" th:text="${company.website}">www.flatleyllc.net</a>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </th:block>
+
+</body>
+
+</html>

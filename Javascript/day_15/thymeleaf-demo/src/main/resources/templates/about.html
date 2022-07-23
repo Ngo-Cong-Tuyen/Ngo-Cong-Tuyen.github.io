@@ -16,6 +16,40 @@
 
 <h1>About page</h1>
 
+<p th:if="${age}<18">Chua du tuoi vi thanh nien</p>
+
+<p th:unless="${age}>=18">Chua du tuoi vi thanh nien</p>
+
+<p th:text="${age}<18 ? 'Chua du tuoi vi thanh nien' : 'Du tuoi vi thanh nien'"></p>
+
+<th:block th:switch="${day}">
+    <p th:case="1">Thu 2</p>
+    <p th:case="2">Thu 3</p>
+    <p th:case="3">Thu 4</p>
+    <p th:case="4">Thu 5</p>
+    <p th:case="5">Thu 6</p>
+    <p th:case="6">Thu 7</p>
+    <p th:case="0">Chu nhat</p>
+    <p th:case="*">Ngay ko hop le</p>
+</th:block>
+
+<h2>Gia tri cua mot bien su dung *{}</h2>
+<th:block th:object="${user}">
+    <p th:text="*{id}">Id: </p>
+    <p th:text="|Name: *{name}|">Name: </p>
+    <p>Email: <th:block th:text="*{name}"> </th:block></p>
+</th:block>
+
+<h2>Cu phap @{}</h2>
+
+<ul>
+    <li th:each="user: ${users}">
+        <a th:href="@{/user/{id} (id = @{user.id},email=@{user.email}) }" th:text="${user.name}"></a>
+    </li>
+</ul>
+
+
+
 <script th:src="@{/js/main.js}"></script>
 </body>
 </html>
