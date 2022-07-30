@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{layout/layout :: main-fragment(~{:: title},~{:: #css},~{:: #content},~{:: #js})}">
+
+<head>
+    <title>Trang chủ</title>
+
+    <th:block id="css">
+        <link rel="stylesheet" th:href="@{/css/style-user.css}">
+    </th:block>
+</head>
+
+<body>
+    <th:block id="content">
+        <div class="list-company pt-5 pb-5">
+            <div class="container">
+                <h2 class="mb-5 fw-normal">Danh Sách Nhà Tuyển Dụng</h2>
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="#">
+                            <div class="company bg-white p-4 mb-4">
+                                <div class="image mt-5 mb-5">
+                                    <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBNzdLRFE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--200865ba7500188f303af7873758943a66971411/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJY0c1bkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtCcWpBPSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--623b1a923c4c6ecbacda77c459f93960558db010/koh-young-technology-inc-logo.png"
+                                         alt="" />
+                                </div>
+                                <div class="info">
+                                    <h2 class="fs-5 mb-5 text-center">
+                                        Koh Young Technology Inc
+                                    </h2>
+                                    <p class="text-center">
+                                        <span class="text-danger">4 việc làm</span>
+                                        -
+                                        <span>Hà Nội</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="#">
+                            <div class="company bg-white p-4 mb-4">
+                                <div class="image mt-5 mb-5">
+                                    <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBNzdLRFE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--200865ba7500188f303af7873758943a66971411/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJY0c1bkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtCcWpBPSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--623b1a923c4c6ecbacda77c459f93960558db010/koh-young-technology-inc-logo.png"
+                                         alt="" />
+                                </div>
+                                <div class="info">
+                                    <h2 class="fs-5 mb-5 text-center">
+                                        Koh Young Technology Inc
+                                    </h2>
+                                    <p class="text-center">
+                                        <span class="text-danger">4 việc làm</span>
+                                        -
+                                        <span>Hà Nội</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="#">
+                            <div class="company bg-white p-4 mb-4">
+                                <div class="image mt-5 mb-5">
+                                    <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBNzdLRFE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--200865ba7500188f303af7873758943a66971411/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJY0c1bkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtCcWpBPSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--623b1a923c4c6ecbacda77c459f93960558db010/koh-young-technology-inc-logo.png"
+                                         alt="" />
+                                </div>
+                                <div class="info">
+                                    <h2 class="fs-5 mb-5 text-center">
+                                        Koh Young Technology Inc
+                                    </h2>
+                                    <p class="text-center">
+                                        <span class="text-danger">4 việc làm</span>
+                                        -
+                                        <span>Hà Nội</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="#">
+                            <div class="company bg-white p-4 mb-4">
+                                <div class="image mt-5 mb-5">
+                                    <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBNzdLRFE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--200865ba7500188f303af7873758943a66971411/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJY0c1bkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtCcWpBPSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--623b1a923c4c6ecbacda77c459f93960558db010/koh-young-technology-inc-logo.png"
+                                         alt="" />
+                                </div>
+                                <div class="info">
+                                    <h2 class="fs-5 mb-5 text-center">
+                                        Koh Young Technology Inc
+                                    </h2>
+                                    <p class="text-center">
+                                        <span class="text-danger">4 việc làm</span>
+                                        -
+                                        <span>Hà Nội</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="#">
+                            <div class="company bg-white p-4 mb-4">
+                                <div class="image mt-5 mb-5">
+                                    <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBNzdLRFE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--200865ba7500188f303af7873758943a66971411/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJY0c1bkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtCcWpBPSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--623b1a923c4c6ecbacda77c459f93960558db010/koh-young-technology-inc-logo.png"
+                                         alt="" />
+                                </div>
+                                <div class="info">
+                                    <h2 class="fs-5 mb-5 text-center">
+                                        Koh Young Technology Inc
+                                    </h2>
+                                    <p class="text-center">
+                                        <span class="text-danger">4 việc làm</span>
+                                        -
+                                        <span>Hà Nội</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="#">
+                            <div class="company bg-white p-4 mb-4">
+                                <div class="image mt-5 mb-5">
+                                    <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBNzdLRFE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--200865ba7500188f303af7873758943a66971411/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJY0c1bkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtCcWpBPSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--623b1a923c4c6ecbacda77c459f93960558db010/koh-young-technology-inc-logo.png"
+                                         alt="" />
+                                </div>
+                                <div class="info">
+                                    <h2 class="fs-5 mb-5 text-center">
+                                        Koh Young Technology Inc
+                                    </h2>
+                                    <p class="text-center">
+                                        <span class="text-danger">4 việc làm</span>
+                                        -
+                                        <span>Hà Nội</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="#">
+                            <div class="company bg-white p-4 mb-4">
+                                <div class="image mt-5 mb-5">
+                                    <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBNzdLRFE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--200865ba7500188f303af7873758943a66971411/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJY0c1bkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtCcWpBPSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--623b1a923c4c6ecbacda77c459f93960558db010/koh-young-technology-inc-logo.png"
+                                         alt="" />
+                                </div>
+                                <div class="info">
+                                    <h2 class="fs-5 mb-5 text-center">
+                                        Koh Young Technology Inc
+                                    </h2>
+                                    <p class="text-center">
+                                        <span class="text-danger">4 việc làm</span>
+                                        -
+                                        <span>Hà Nội</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="#">
+                            <div class="company bg-white p-4 mb-4">
+                                <div class="image mt-5 mb-5">
+                                    <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBNzdLRFE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--200865ba7500188f303af7873758943a66971411/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJY0c1bkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtCcWpBPSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--623b1a923c4c6ecbacda77c459f93960558db010/koh-young-technology-inc-logo.png"
+                                         alt="" />
+                                </div>
+                                <div class="info">
+                                    <h2 class="fs-5 mb-5 text-center">
+                                        Koh Young Technology Inc
+                                    </h2>
+                                    <p class="text-center">
+                                        <span class="text-danger">4 việc làm</span>
+                                        -
+                                        <span>Hà Nội</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+
+</body>
+
+</html>
