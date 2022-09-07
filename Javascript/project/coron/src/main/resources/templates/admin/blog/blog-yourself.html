@@ -22,7 +22,7 @@
                 <div class="col-sm-12">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a th:href="@{/admin/dashboard}">Dashboard</a>
+                            <a th:href="@{/admin/blogs}">Dashboard</a>
                         </li>
                         <li class="breadcrumb-item active">
                             Bài viết của tôi
@@ -72,7 +72,7 @@
                                     <td>
                                         <a href="#" th:text="${blog.user.name}">John Doe</a>
                                     </td>
-                                    <td th:text="${T(com.example.blog.util.Utils).generateCategoryString(blog.categories)}">
+                                    <td >
                                         Java, Golang, Springboot
                                     </td>
                                     <td th:text="${blog.status}==1 ? 'Công khai' : 'Nháp'">Công khai</td>

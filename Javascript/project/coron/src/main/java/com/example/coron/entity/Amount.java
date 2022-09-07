@@ -23,8 +23,13 @@ public class Amount {
     @Column(name = "size")
     private String size;
 
+    @Column(name = "quantity")
+    private Integer quantity;
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+
+
 
 }

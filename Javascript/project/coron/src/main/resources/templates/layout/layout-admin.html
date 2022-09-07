@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" th:fragment="main-fragment(title, css, main, js)">
+<html lang="zxx" xmlns:th="https://www.thymeleaf.org" th:fragment="main-fragment(title, css, main, js)" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title th:replace="${title}">AdminLTE 3 | Dashboard</title>
+    <title th:replace="${title} ?: ~{}">AdminLTE 3 | Dashboard</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -14,7 +14,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" th:href="@{/admin-lte/plugins/fontawesome-free/css/all.min.css}" />
     <!-- Ionicons -->
-    <link rel="stylesheet" th:href="@{/admin-lte/https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css}" />
+    <link rel="stylesheet" th:href="@{https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css}" />
 
     <!-- Theme style -->
     <link rel="stylesheet" th:href="@{/admin-lte/dist/css/adminlte.min.css}" />
@@ -31,7 +31,7 @@
     <th:block th:replace="~{/fragments/header-admin :: header}"></th:block>
 
     <!-- Content -->
-    <th:block th:replace="${main}"></th:block>
+    <th:block th:replace="${main} ?: ~{}"></th:block>
 </div>
 
 <!-- jQuery -->
@@ -49,6 +49,7 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script th:src="@{/admin-lte/dist/js/custom.js}"></script>
+
 
 <!--    JS-->
 <th:block th:replace="${js} ?: ~{}"></th:block>

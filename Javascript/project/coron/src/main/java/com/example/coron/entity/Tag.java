@@ -23,12 +23,4 @@ public class Tag {
     @Column(name = "slug")
     private String slug;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "blog_id")
-    private Blog blog;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
-    private Product product;
-
 }

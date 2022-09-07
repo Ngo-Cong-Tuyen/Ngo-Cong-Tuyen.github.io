@@ -1,8 +1,18 @@
 package com.example.coron.entity;
 
+import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.*;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 
 @Builder
 @AllArgsConstructor
@@ -11,7 +21,11 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "user")
-public class User {
+@TypeDef(
+        name = "json",
+        typeClass = JsonStringType.class
+)
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,7 +50,56 @@ public class User {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "role")
-    private String role;
+    @Column(name = "enabled")
+    private Boolean enabled = false;
+    @Type(type = "json")
+    @Column(name= "role", columnDefinition = "json")
+    private List<String> role;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> roles = new ArrayList<>();
+        this.getRole().forEach(r -> roles.add(new SimpleGrantedAuthority("ROLE_"+ r)));
+        return roles;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public User(String name,String phone, String email, String password,String address, List<String> role) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+        this.address = address;
+        this.role = role;
+    }
 
 }

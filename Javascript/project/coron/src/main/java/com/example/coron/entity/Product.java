@@ -20,7 +20,7 @@ public class Product {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "sku")
+    @Column(name = "sku", unique = true)
     private String sku;
 
     @Column(name = "name")
@@ -30,11 +30,11 @@ public class Product {
     @Column(name = "price")
     private Integer price;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
 
-    @Column(name = "content")
+    @Column(name = "content",columnDefinition = "TEXT")
     private String content;
 
     @Column(name = "created_at")
@@ -55,6 +55,18 @@ public class Product {
             inverseJoinColumns = @JoinColumn(name = "materials_id"))
     private Collection<Material> materials = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(name = "product_tags",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "tags_id"))
+    private Collection<Tag> tags = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Collection<Amount> amounts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Collection<Image> images = new ArrayList<>();
+
     @PrePersist
     public void prePersist() {
         createdAt = LocalDateTime.now();
@@ -64,4 +76,6 @@ public class Product {
     public void preUpdate() {
         updatedAt = LocalDateTime.now();
     }
+
+
 }

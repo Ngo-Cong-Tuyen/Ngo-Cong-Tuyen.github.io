@@ -40,7 +40,7 @@
             <div class="row py-2">
                 <div class="col-12">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create-category">
-                        Tạo mới
+                        Create
                     </button>
                 </div>
             </div>
@@ -51,18 +51,21 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <th>Tên danh mục</th>
+                                    <th>Categories</th>
+                                    <th>Category Parent</th>
                                     <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr th:each="category: ${categories}">
                                     <td th:text="${category.name}">Lập trình Backend</td>
+                                    <td th:text="${category.category?.name}"></td>
                                     <td>
-                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-update-category"  th:attr="onclick=|transferCategory('${category}')|" >
-                                            Cập nhật
+                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-update-category"
+                                                th:onclick="transferCategory([[${category}]])">
+                                            Update
                                         </button>
-                                        <button class="btn btn-danger">Xóa</button>
+                                        <button class="btn btn-danger" th:onclick="deleteCategory([[${category}]])">Delete</button>
                                     </td>
 
                                 </tr>
@@ -126,6 +129,17 @@
                     <div class="form-group">
                         <label>Tên category</label>
                         <input type="text" class="form-control" id="name-create">
+
+                        <label>Category parent</label>
+                        <div class="w-100">
+                            <select class="form-select form-select-lg w-100" aria-label="Default select example" id="category-parent-create">
+                                <option selected value="">Open this select menu</option>
+                                <option th:each="category: ${categories}" th:text="${category.name}" th:value="${category.id}">
+                                    Java
+                                </option>
+                            </select>
+                        </div>
+
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -151,6 +165,16 @@
                     <div class="form-group">
                         <label>Tên category</label>
                         <input type="text" class="form-control" id="name-update">
+
+                        <label>Category parent</label>
+                        <div class="w-100">
+                            <select class="form-select form-select-lg w-100" aria-label="Default select example" id="category-parent-update">
+                                <option selected value="">Open this select menu</option>
+                                <option th:each="category: ${categories}" th:text="${category.name}" th:value="${category.id}">
+                                    Java
+                                </option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -165,10 +189,61 @@
 </div>
 <th:block id="js">
     <script th:inline="javascript">
+        let id =0;
         function transferCategory(Category){
             console.log(Category)
             console.log(Category.name)
             $("#name-update").val(Category.name);
+            id= Category.id;
+        }
+        const btnCreate = document.getElementById("btn-create");
+        const nameCreateInput = document.getElementById("name-create");
+        const categoryParent = document.getElementById("category-parent-create");
+        btnCreate.addEventListener("click", async () => {
+            try{
+                await axios.post('/api/admin/categories/create',{
+                    name: nameCreateInput.value,
+                    categoryId: categoryParent.value
+                })
+                alert("Creating Successful!");
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500)
+            } catch (e) {
+                console.log(e);
+            }
+        });
+
+        const btnUpdate = document.getElementById("btn-update");
+        const nameUpdateInput = document.getElementById("name-update");
+        const categoryParentUpdate = document.getElementById("category-parent-update");
+        btnUpdate.addEventListener("click", async () => {
+            try{
+                await axios.put(`/api/admin/categories/${id}/update`,{
+                    name: nameUpdateInput.value,
+                    categoryId: categoryParentUpdate.value
+                })
+                alert("Updating Successful!");
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500)
+            } catch (e) {
+                console.log(e);
+            }
+        });
+        async function deleteCategory(Category){
+            try{
+                await axios.delete(`/api/admin/categories/${Category.id}/delete`);
+                alert("Delete Successful!");
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500)
+            } catch (e) {
+                console.log(e);
+            }
         }
     </script>
 </th:block>

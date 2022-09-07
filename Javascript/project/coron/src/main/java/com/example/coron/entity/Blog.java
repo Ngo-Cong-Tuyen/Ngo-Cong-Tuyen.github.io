@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Builder
 @AllArgsConstructor
@@ -50,6 +52,11 @@ public class Blog {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToMany
+    @JoinTable(name = "blog_tags",
+            joinColumns = @JoinColumn(name = "blog_id"),
+            inverseJoinColumns = @JoinColumn(name = "tags_id"))
+    private Collection<Tag> tags = new ArrayList<>();
 
     @PrePersist
     public void prePersist() {

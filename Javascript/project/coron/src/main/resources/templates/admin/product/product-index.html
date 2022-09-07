@@ -5,7 +5,7 @@
         ~{:: title},
         ~{},
         ~{:: .content-wrapper},
-        ~{}
+        ~{:: #js}
       )}
 ">
 
@@ -23,7 +23,7 @@
                 <div class="col-sm-12">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a th:href="@{/admin/dashboard}">Trang chủ</a>
+                            <a th:href="@{/admin}">Trang chủ</a>
                         </li>
                         <li class="breadcrumb-item active">
                             Danh sách sản phẩm
@@ -42,7 +42,7 @@
                     <a th:href="@{/admin/products/create}" class="btn btn-primary">
                         <i class="fas fa-plus"></i> Thêm sản phẩm mới
                     </a>
-                    <a th:href="@{/admin/blogs}" class="btn btn-info">
+                    <a th:href="@{/admin/products}" class="btn btn-info">
                         <i class="fas fa-redo"></i> Refresh
                     </a>
                 </div>
@@ -67,21 +67,21 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <tr th:each="product: ${products}">
                                     <td width="10"><input type="checkbox" name="check1" value="1"></td>
-                                    <td>00000001</td>
-                                    <td>Áo thun nam</td>
+                                    <td th:text="${product.sku}">00000001</td>
+                                    <td th:text="${product.name}">Áo thun nam</td>
                                     <td><img src="" alt=""></td>
-                                    <td>5</td>
-                                    <td><span class="badge bg-success">Còn hàng</span></td>
-                                    <td>600000 đ</td>
-                                    <td>Nam , áo thun</td>
-                                    <td>19/08/2022</td>
+                                    <td th:text="${T(com.example.coron.util.Utils).totalProducts(product.amounts)}">5</td>
+                                    <td><span class="badge bg-success" th:text="${T(com.example.coron.util.Utils).totalProducts(product.amounts)} >0 ? 'Còn hàng': 'Hết hàng'" >Còn hàng</span></td>
+                                    <td th:text="${product.price}">600000 đ</td>
+                                    <td th:text="${T(com.example.coron.util.Utils).generateCategoryString(product.categories)}">Nam , áo thun</td>
+                                    <td th:text="${#temporals.format(product.createdAt,'dd-MM-yyyy')}">19/08/2022</td>
                                     <td><button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
-                                                onclick="myFunction(this)"><i class="fas fa-trash-alt"></i>
+                                                th:onclick="deleteProduct([[${product}]])"><i class="fas fa-trash-alt"></i>
                                     </button>
                                         <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal"
-                                                data-target="#ModalUP"><i class="fas fa-edit"></i></button></td>
+                                                data-target="#ModalUP" th:onclick="changeToDetailPage([[${product.sku}]])"><i class="fas fa-edit"></i></button></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -131,7 +131,26 @@
     </section>
 
 </div>
+<th:block id="js">
+    <script th:inline="javascript">
+        async function deleteProduct(Product) {
+            try {
+                await
+                axios.delete(`/api/admin/products/${Product.sku}`);
+                alert("Delete Successful!");
 
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500)
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        function changeToDetailPage(sku){
+            window.location.href = `/admin/products/${sku}`;
+        }
+    </script>
+</th:block>
 </body>
 
 </html>

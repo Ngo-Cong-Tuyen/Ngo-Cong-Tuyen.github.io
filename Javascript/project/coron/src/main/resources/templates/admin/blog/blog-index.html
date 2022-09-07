@@ -74,7 +74,7 @@
                                     <td>
                                         <a href="#" th:text="${blog.user}==null? 'My own' : ${blog.user.name} ">John Doe</a>
                                     </td>
-                                    <td th:text="${T(com.example.blog.util.Utils).generateCategoryString(blog.categories)}">
+                                    <td >
                                         Java, Golang, Springboot
                                     </td>
                                     <td th:text="${blog.status}==1 ? 'Công khai' : 'Nháp'">Công khai</td>

@@ -12,6 +12,11 @@ public class BlogController {
 
     @Autowired
     private BlogService blogService;
+
+    @GetMapping("/admin")
+    public String getHomePage() {
+        return "layout/layout-admin";
+    }
     @Autowired
     private TagService tagService;
      // Render data in admin/blogs, get all blogs information.
