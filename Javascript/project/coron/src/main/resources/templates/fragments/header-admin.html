@@ -28,10 +28,10 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
                     <a href="/" class="dropdown-item">
-                        <span class="text-muted">Trang chủ</span>
+                        <span class="text-muted">Home</span>
                     </a>
-                    <a href="#" class="dropdown-item">
-                        <span class="text-muted">Đăng xuất</span>
+                    <a href="/logout" class="dropdown-item">
+                        <span class="text-muted">Log out</span>
                     </a>
                 </div>
             </li>
@@ -44,11 +44,11 @@
     </nav>
 
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <aside class="main-sidebar sidebar-dark-primary elevation-4 ">
         <!-- Brand Logo -->
         <a th:href="@{/admin}" class="brand-link">
-            <img th:src="@{/admin-lte/dist/img/AdminLTELogo.png}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-                 style="opacity: 0.8" />
+            <img th:src="@{/assets/img/logo/logo.jpg.png}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                />
             <span class="brand-text font-weight-light">Admin</span>
         </a>
 
@@ -59,7 +59,7 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <li class="nav-item">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-chart-pie"></i>
+                            <i class="nav-icon fas fa-pager"></i>
                             <p>
                                 Quản lý bài viết
                                 <i class="right fas fa-angle-left"></i>
@@ -88,7 +88,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-chart-pie"></i>
+                            <i class="nav-icon fas fa-shapes"></i>
                             <p>
                                 Quản lý sản phẩm
                                 <i class="right fas fa-angle-left"></i>
@@ -111,7 +111,32 @@
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-copy"></i>
+                            <i class="nav-icon fas fa-box"></i>
+                            <p>
+                                Quản lý đơn hàng
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a th:href="@{/admin/carts}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Danh sách giỏ hàng</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a th:href="@{/admin/orders}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Danh sách đơn hàng</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-book"></i>
                             <p>
                                 Quản lý category
                                 <i class="fas fa-angle-left right"></i>
@@ -128,7 +153,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-tree"></i>
+                            <i class="nav-icon fas fa-person-booth"></i>
                             <p>
                                 Quản lý user
                                 <i class="fas fa-angle-left right"></i>
@@ -136,7 +161,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a th:href="@{/admin/users}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Danh sách user</p>
                                 </a>

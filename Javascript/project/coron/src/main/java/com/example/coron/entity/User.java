@@ -9,6 +9,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -21,11 +23,8 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "user")
-@TypeDef(
-        name = "json",
-        typeClass = JsonStringType.class
-)
-public class User implements UserDetails {
+@TypeDef(name = "json", typeClass = JsonStringType.class)
+public class User implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -50,11 +49,25 @@ public class User implements UserDetails {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "province")
+    private String provice;
+
+    @Column(name = "district")
+    private String district;
+
+    @Column(name = "ward")
+    private String ward;
     @Column(name = "enabled")
     private Boolean enabled = false;
     @Type(type = "json")
     @Column(name= "role", columnDefinition = "json")
     private List<String> role;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -102,4 +115,13 @@ public class User implements UserDetails {
         this.role = role;
     }
 
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 }

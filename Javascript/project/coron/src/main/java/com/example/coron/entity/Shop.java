@@ -10,19 +10,23 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "transaction")
-public class Transaction {
+@Table(name = "shop")
+public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "shipping")
-    private Integer shipping;
+    @Column(name = "token")
+    private String token;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "shop_id")
+    private String shopId;
 
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "address")
+    private String address;
 
 }

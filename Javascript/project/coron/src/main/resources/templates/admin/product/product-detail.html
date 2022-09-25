@@ -271,7 +271,7 @@
             skuEl.value = product.sku;
             nameProductEl.value = product.name;
             easyMDE.value(product.content);
-            descriptionEl.value= product.content;
+            descriptionEl.value= product.description;
             priceEl.value= product.price;
             $("#category").val(categories).trigger('change');
             console.log(categories);
@@ -285,16 +285,17 @@
                                             <th scope="row" class="count">1</th>
                                             <td>
                                                 <select  class="form-select form-select-lg mb-3 size-product" >
-                                                    <option>XS</option>
-                                                    <option>S</option>
-                                                    <option>M</option>
-                                                    <option>L</option>
-                                                    <option>XL</option>
-                                                    <option>XXL</option>
+                                                    <option value="XS" >XS</option>
+                                                    <option value="S">S</option>
+                                                    <option value="M">M</option>
+                                                    <option value="L">L</option>
+                                                    <option value="XL">XL</option>
+                                                    <option value="XXL">XXL</option>
                                                  </select>
                                             </td>
                                             <td><input type="text" value="${amount.color}"></td>
                                             <td><input type="number" value="${amount.quantity}"></td>`;
+            row.querySelector('select').value= amount.size;
             amounts.push(row);
         }
         renderTable(amounts);
@@ -350,7 +351,7 @@
             renderTable(amounts);
         })
 
-
+        // Update
         btnCreate.addEventListener("click", async () => {
             try{
                 let amountRequest = [];

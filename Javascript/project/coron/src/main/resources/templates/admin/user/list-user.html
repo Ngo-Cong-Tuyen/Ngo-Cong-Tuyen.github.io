@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout-admin :: main-fragment(
+        ~{:: title},
+        ~{},
+        ~{:: .content-wrapper},
+        ~{:: #js}
+      )}
+">
+
+<head>
+    <title>List-user</title>
+</head>
+
+<body>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a th:href="@{/admin}">Trang chủ</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            Danh sách sản phẩm
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row py-2">
+                <div class="col-12">
+                    <a th:href="@{/admin/products/create}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Thêm sản phẩm mới
+                    </a>
+                    <a th:href="@{/admin/products}" class="btn btn-info">
+                        <i class="fas fa-redo"></i> Refresh
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th width="10"><input type="checkbox" id="all"></th>
+                                    <th>Tên</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Địa chỉ</th>
+                                    <th>Số sản phẩm đã mua</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Chức năng</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="product: ${products}">
+                                    <td width="10"><input type="checkbox" name="check1" value="1"></td>
+                                    <td th:text="${product.sku}">00000001</td>
+                                    <td th:text="${product.name}">Áo thun nam</td>
+                                    <td><img src="" alt=""></td>
+                                    <td th:text="${T(com.example.coron.util.Utils).totalProducts(product.amounts)}">5</td>
+                                    <td><span class="badge bg-success" th:text="${T(com.example.coron.util.Utils).totalProducts(product.amounts)} >0 ? 'Còn hàng': 'Hết hàng'" >Còn hàng</span></td>
+                                    <td><button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
+                                                th:onclick="deleteProduct([[${product}]])"><i class="fas fa-trash-alt"></i>
+                                    </button>
+                                        <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal"
+                                                data-target="#ModalUP" th:onclick="changeToDetailPage([[${product.sku}]])"><i class="fas fa-edit"></i></button></td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="d-flex justify-content-center mt-3" id="pagination">
+                                <ul class="pagination mb-0">
+                                    <li class="paginate_button page-item previous disabled"
+                                        id="example2_previous">
+                                        <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0"
+                                           class="page-link">Previous</a>
+                                    </li>
+                                    <li class="paginate_button page-item active">
+                                        <a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0"
+                                           class="page-link">1</a>
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                        <a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0"
+                                           class="page-link">2</a>
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                        <a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0"
+                                           class="page-link">3</a>
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                        <a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0"
+                                           class="page-link">4</a>
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                        <a href="#" aria-controls="example2" data-dt-idx="5" tabindex="0"
+                                           class="page-link">5</a>
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                        <a href="#" aria-controls="example2" data-dt-idx="6" tabindex="0"
+                                           class="page-link">6</a>
+                                    </li>
+                                    <li class="paginate_button page-item next" id="example2_next">
+                                        <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0"
+                                           class="page-link">Next</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+<th:block id="js">
+    <script th:inline="javascript">
+        async function deleteProduct(Product) {
+            try {
+                await
+                axios.delete(`/api/admin/products/${Product.sku}`);
+                alert("Delete Successful!");
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500)
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        function changeToDetailPage(sku){
+            window.location.href = `/admin/products/${sku}`;
+        }
+    </script>
+</th:block>
+</body>
+
+</html>

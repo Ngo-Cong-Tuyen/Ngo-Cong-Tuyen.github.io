@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -19,6 +20,11 @@ public class CategoryService {
 
     public List<Category> getAll(){
         return categoryRepository.findAll();
+    }
+
+    public List<Category> getAllParentCategory(){
+        List<Category> categories= getAll();
+        return categories.stream().filter(category -> category.getCategory()==null).collect(Collectors.toList());
     }
     public void create(CategoryCreateRequest request) {
         if (request.getCategoryId()!=null){

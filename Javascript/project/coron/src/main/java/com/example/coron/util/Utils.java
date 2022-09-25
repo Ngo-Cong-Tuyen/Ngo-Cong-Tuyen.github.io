@@ -3,6 +3,7 @@ package com.example.coron.util;
 
 
 import com.example.coron.dto.BlogDto;
+import com.example.coron.dto.CartInfo;
 import com.example.coron.dto.ProductDto;
 import com.example.coron.entity.Amount;
 
@@ -64,5 +65,15 @@ public class Utils {
             total += amount.getQuantity();
         }
         return total;
+    }
+
+    public static String renderCart(List<CartInfo> carts){
+        String cartInfo;
+        int sum =0;
+        for (CartInfo cart: carts){
+            sum += cart.getPrice();
+        }
+        cartInfo = carts.size()+ " items - " + money(sum);
+        return cartInfo;
     }
 }

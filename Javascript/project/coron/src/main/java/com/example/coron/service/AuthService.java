@@ -2,10 +2,13 @@ package com.example.coron.service;
 
 import com.example.coron.entity.Token;
 import com.example.coron.entity.User;
+import com.example.coron.exception.NotFoundException;
 import com.example.coron.repository.TokenRepository;
 import com.example.coron.repository.UserRepository;
 import com.example.coron.request.RegisterUserRequest;
+import com.example.coron.security.UserDetailsCustom;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -74,6 +77,23 @@ public class AuthService {
         userRepository.activeUser(token.getUser().getEmail());
 
         return "confirm";
+    }
+
+    public boolean checkAccount(String email, String password){
+        User user = userRepository.findByEmail(email).orElseThrow(()->{
+            throw new NotFoundException("Not found user have email: " +email);
+        });
+        if (user.getPassword().equals(password)){
+            return true;
+        } else return false;
+    }
+
+    // Check user
+    public String checkUser(){
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser")) return "anonymousUser";
+        UserDetailsCustom user = (UserDetailsCustom) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return user.getUsername();
     }
 }
 

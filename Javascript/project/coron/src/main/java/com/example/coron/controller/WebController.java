@@ -1,31 +1,42 @@
 package com.example.coron.controller;
 
+import com.example.coron.security.UserDetailsCustom;
+import com.example.coron.service.AuthService;
+import com.example.coron.service.CartService;
 import com.example.coron.service.ProductService;
+import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
+
 public class WebController {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private CartService cartService;
+    @Autowired
+    private AuthService authService;
+
 
     @GetMapping("/layout")
     public String getLayoutPage(Model model) {
-
         return "layout/layout";
     }
 
     // Get index page 1
     @GetMapping("/")
     public String getHomePage(Model model) {
+        String email = authService.checkUser();
+        model.addAttribute("carts", cartService.getAllCartInfoByUserEmail(email));
         model.addAttribute("products", productService.getAllProductDto());
         return "web/index";
     }
@@ -36,11 +47,13 @@ public class WebController {
         return "web/index-2";
     }
 
-    // Get shop page
-    @GetMapping("/shop")
-    public String getShopPage(Model model) {
-        return "web/shop";
+    @GetMapping("/single-product/{sku}")
+    public String getSingleProductPage(@PathVariable String sku, Model model) {
+        model.addAttribute("product", productService.getProductDto(sku));
+        return "web/single-product";
     }
+
+    // Get shop page
 
     @GetMapping("/shop-list")
     public String getShopListPage(Model model) {
@@ -68,10 +81,7 @@ public class WebController {
         return "web/shop-sidebar-list";
     }
 
-    @GetMapping("/single-product/{sku}")
-    public String getSingleProductPage(Model model, @PathVariable String sku) {
-        return "web/single-product";
-    }
+
 
     @GetMapping("/single-product-sidebar")
     public String getSingleProductSidebarPage(Model model) {
@@ -98,15 +108,6 @@ public class WebController {
     }
 
 
-    @GetMapping("/my-account")
-    public String getMyAccountPage(Model model) {
-        return "web/my-account";
-    }
-
-    @GetMapping("/cart")
-    public String getCartPage(Model model) {
-        return "web/cart";
-    }
 
     @GetMapping("/login")
     public String getLoginPage(Model model) {

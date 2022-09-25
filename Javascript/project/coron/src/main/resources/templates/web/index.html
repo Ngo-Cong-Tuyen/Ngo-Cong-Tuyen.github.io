@@ -238,7 +238,7 @@
                                 <div class="col-lg-3"  th:each="product: ${products}" >
                                     <div class="single_product">
                                         <div class="product_thumb">
-                                            <a th:href="@{/single-product/{sku} (sku = ${product.sku})}">
+                                            <a th:href="@{/single-product/{sku} (sku=${product.sku})}">
                                                 <img th:src="@{'/'+${product.getImages()[0].url}}" alt=""></a>
                                             <div class="img_icone">
                                                 <img src="assets\img\cart\span-new.png" alt="">
@@ -249,7 +249,7 @@
                                         </div>
                                         <div class="product_content">
                                             <span class="product_price" th:text="${T(com.example.coron.util.Utils).money(product.price)}">$50.00</span>
-                                            <h3 class="product_title"><a th:href="@{/single-product}" th:text="${product.name}">Curabitur sodales</a></h3>
+                                            <h3 class="product_title"><a th:href="@{/single-product/{sku} (sku=${product.sku})}" th:text="${product.name}">Curabitur sodales</a></h3>
                                         </div>
                                         <div class="product_info">
                                             <ul>

@@ -13,7 +13,6 @@ import java.util.List;
 @Setter
 @ToString
 public class BlogDto implements Serializable {
-    private Integer id;
     private String title;
     private String slug;
     private String description;

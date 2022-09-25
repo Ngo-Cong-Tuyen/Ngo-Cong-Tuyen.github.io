@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout-admin :: main-fragment(
+        ~{:: title},
+        ~{:: #css},
+        ~{:: .content-wrapper},
+        ~{:: #js}
+      )}
+">
+
+<head>
+    <title>Dand sách giỏ hàng</title>
+    <th:block id="css">
+        <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    </th:block>
+</head>
+
+<body>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a th:href="@{/admin}">Trang chủ</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            Danh sách giỏ hàng
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row py-2">
+                <div class="col-12">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-shop">
+                        Add a shop
+                    </button>
+                    <a th:href="@{/admin/carts}" class="btn btn-info">
+                        <i class="fas fa-redo"></i> Refresh
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th width="10"><input type="checkbox" id="all"></th>
+                                    <th>Tên người nhận</th>
+                                    <th>Danh sách sản phẩm</th>
+                                    <th>Ngày đặt hàng </th>
+                                    <th>Chức năng</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="carts: ${listCartUsers}">
+                                    <td width="10"><input type="checkbox" name="check1" value="1"></td>
+                                    <td th:text="${carts.userName}">00000001</td>
+                                    <td >
+                                        <div class="shopping_cart" style="width: 250px">
+                                            <a href="#"><i class="fa fa-shopping-cart"></i> <th:block th:text="${T(com.example.coron.util.Utils).renderCart(carts.cartInfos)}"></th:block> <i class="fa fa-angle-down"></i></a>
+
+                                            <!--mini cart-->
+                                            <div class="mini_cart" style="width: 250px">
+                                                <div class="cart_item" th:each="cart:${carts.cartInfos}">
+                                                    <div class="cart_img">
+                                                        <a th:href="@{/single-product/{sku} (sku=${cart.sku})}"><img th:src="@{'/'+${cart.image}}" alt="" style="max-width: 100%"></a>
+                                                    </div>
+                                                    <div class="cart_info">
+                                                        <a th:href="@{/single-product/{sku} (sku=${cart.sku})}" th:text="${cart.productName}">lorem ipsum dolor</a>
+                                                        <span class="cart_price" th:text="${T(com.example.coron.util.Utils).money(cart.price)}">$115.00</span>
+                                                        <span class="quantity" th:text="'Qty: '+ ${cart.quantity}">Qty: 1</span>
+                                                    </div>
+                                                    <div class="cart_remove">
+                                                        <a title="Remove this item" href="#"><i class="fa fa-times-circle"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--mini cart end-->
+                                        </div>
+                                    </td>
+                                    <td th:text="${carts.cartInfos[0].updatedAt}"></td>
+                                    <td>
+                                        <button class="btn btn-danger btn-sm trash" type="button" title="Hủy giỏ hàng"
+                                                th:onclick="deleteListCart([[${carts.cartInfos}]])"><i class="fas fa-trash-alt"></i>
+                                        </button>
+
+                                        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" title="Tạo đơn hàng"
+                                                data-bs-target="#exampleModal" th:onclick="renderModelData([[${carts}]])">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="d-flex justify-content-center mt-3" id="pagination">
+                                <ul class="pagination mb-0">
+                                    <li class="paginate_button page-item previous disabled"
+                                        id="example2_previous">
+                                        <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0"
+                                           class="page-link">Previous</a>
+                                    </li>
+                                    <li class="paginate_button page-item active">
+                                        <a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0"
+                                           class="page-link">1</a>
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                        <a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0"
+                                           class="page-link">2</a>
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                        <a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0"
+                                           class="page-link">3</a>
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                        <a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0"
+                                           class="page-link">4</a>
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                        <a href="#" aria-controls="example2" data-dt-idx="5" tabindex="0"
+                                           class="page-link">5</a>
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                        <a href="#" aria-controls="example2" data-dt-idx="6" tabindex="0"
+                                           class="page-link">6</a>
+                                    </li>
+                                    <li class="paginate_button page-item next" id="example2_next">
+                                        <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0"
+                                           class="page-link">Next</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Modal -->
+    <!--Modal create shop-->
+    <div class="modal fade" id="modal-add-shop" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thêm cửa hàng</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div>
+                            <label>Tên cửa hàng</label>
+                            <input type="text" class="form-control" id="shop-name">
+                        </div>
+                        <div class="mt-2">
+                            <label>Id cửa hàng</label>
+                            <input type="text" class="form-control" id="shop-id">
+                        </div>
+                        <div class="mt-2">
+                            <label>Token cửa hàng</label>
+                            <input type="text" class="form-control" id="shop-token">
+                        </div>
+                        <div class="mt-2">
+                            <label>Địa chỉ</label>
+                            <input type="text" class="form-control" id="shop-address">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" id="btn-add-shop">Thêm</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Order details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal-order">
+                    <div>
+                        <label for="shop-id-select" class="form-label w-100" >Cửa hàng<span>*</span></label>
+                        <select class="form-select w-100 mb-3" id="shop-id-select">
+                            <option th:each="shop: ${shops}" th:value="${shop.shopId}" th:text="${shop.name}" selected>Trả trước</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="name" class="form-label">Name <span>*</span></label>
+                        <input type="text" class="form-control" id="name">
+                    </div>
+
+                    <div class="mt-2">
+                        <label for="phone-number" class="form-label">Phone Number<span>*</span></label>
+                        <input type="text" class="form-control" id="phone-number">
+                    </div>
+
+                    <div class="d-flex mt-2" id="field-element">
+                        <div class="mr-2">
+                            <label for="total-weight" class="form-label">Weight(g)<span>*</span></label>
+                            <input type="number" class="form-control" id="total-weight">
+                        </div>
+                        <div class="mr-2">
+                            <label for="total-length" class="form-label">Length(cm)<span>*</span></label>
+                            <input type="number" class="form-control" id="total-length">
+                        </div>
+                        <div class="mr-2">
+                            <label for="total-width" class="form-label">Width(cm)<span>*</span></label>
+                            <input type="number" class="form-control" id="total-width">
+                        </div>
+                        <div >
+                            <label for="total-height" class="form-label">Height(cm)<span>*</span></label>
+                            <input type="number" class="form-control" id="total-height">
+                        </div>
+                    </div>
+                    <div class="d-flex mt-2">
+
+                        <div class="w-50 mr-2">
+                            <label for="pay-type-id" class="form-label w-100" >Phương thức thanh toán <span>*</span></label>
+                            <select class="form-select w-100 mb-3" id="pay-type-id">
+                                <option value="1">Trả trước</option>
+                                <option value="2" selected>Trả sau</option>
+                            </select>
+                        </div>
+                        <div class="w-50">
+                            <label for="required-note" class="form-label w-100" >Hình thức kiểm tra <span>*</span></label>
+                            <select class="form-select w-100 mb-3" id="required-note">
+                                <option value="CHOTHUHANG">Cho thử hàng</option>
+                                <option value="CHOXEMHANGKHONGTHU" selected>Cho xem hàng không thử</option>
+                                <option value="KHONGCHOXEMHANG" >Không cho xem hàng</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label  class="form-label">Address <span>*</span></label>
+                        <input type="text" class="form-control" id="address">
+                    </div>
+
+                    <div class="d-flex mt-2" >
+                        <div class="mr-2">
+                            <label for="province" class="form-label w-100" >Province <span>*</span></label>
+                            <select class="form-select w-100 mb-3" id="province"></select>
+                        </div>
+                        <div class="mr-2">
+                            <label for="district" class="form-label w-100" >District <span>*</span></label>
+                            <select class="form-select w-100 mb-3" id="district"></select>
+                        </div>
+                        <div >
+                            <label for="ward" class="form-label w-100" >Ward <span>*</span></label>
+                            <select class="form-select w-100 mb-3" id="ward"></select>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="create-order">Create new order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block id="js">
+    <script th:inline="javascript">
+        async function deleteListCart(carts) {
+            let listCartInfo=[];
+            for (let cart of carts){
+                listCartInfo.push(cart.cartId);
+            }
+
+            if (confirm("bạn muốn hủy đơn hàng?")) {
+                try {
+                    await
+                    axios.put(`/api/v1/admin/carts/delete`,{
+                        carts: listCartInfo
+                    });
+                    alert("Delete Successful!");
+
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500)
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+        }
+
+        // Add shop process
+        const addShopBtn= document.getElementById("btn-add-shop");
+        const shopNameEl = document.getElementById("shop-name");
+        const shopIdEl =document.getElementById("shop-id");
+        const shopTokenEl = document.getElementById("shop-token");
+        const shopAddressEl = document.getElementById("shop-address");
+        const listInputShopForm= document.querySelectorAll("#modal-add-shop input");
+        addShopBtn.addEventListener('click',async function(){
+            let check = true;
+            for (let child of listInputShopForm){
+                if (child.value=="") {
+                    child.previousElementSibling.classList.add("text-danger");
+                    check= false;
+                } else {
+                    child.previousElementSibling.classList.add("text-success");
+                }
+            }
+            if (check){
+                try{
+                    let res = await axios.post(`/api/v1/admin/shops/create`,{
+                        "token": shopTokenEl.value,
+                        "shopId": shopIdEl.value,
+                        "name": shopNameEl.value,
+                        "address": shopAddressEl.value
+                    })
+                    console.log(res);
+                    alert(res.data);
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+
+        });
+    </script>
+    <script th:inline="javascript">
+        // Address process
+        const provinceEl = document.getElementById("province");
+        const districtEl = document.getElementById("district");
+        const wardEl = document.getElementById("ward");
+        const addressEl = document.getElementById("address");
+        const phoneNumberEl = document.getElementById("phone-number");
+        const nameEl = document.getElementById('name');
+        const createBtn = document.getElementById("create-order");
+        const childEls = document.querySelectorAll("#modal-order input,select");
+        const shopIdSelectEl= document.getElementById("shop-id-select");
+        const fieldSizeEl = document.querySelectorAll("#field-element input");
+        let carts;
+        createBtn.addEventListener('click',async function () {
+            let check = true;
+            let codAmount=0;
+            for (let cart of carts.cartInfos){
+                codAmount+= cart.price;
+            }
+            for ( let child of childEls) {
+                if (child.value=="") {
+                    child.previousElementSibling.classList.add("text-danger");
+                    check= false;
+                } else {
+                    child.previousElementSibling.classList.remove("text-danger");
+                    child.previousElementSibling.classList.add("text-success");
+                }
+                console.log(child)
+                console.log(child.value);
+                console.log(check);
+            }
+            console.log(check);
+            if (!isValid(phoneNumberEl.value)) {
+                phoneNumberEl.previousElementSibling.classList.add("text-danger");
+                check= false;
+            }else {
+                phoneNumberEl.previousElementSibling.classList.remove("text-danger");
+                phoneNumberEl.previousElementSibling.classList.add("text-success");
+            }
+
+            for (let field of fieldSizeEl) {
+                if (field.value<=0) {
+                    field.previousElementSibling.classList.add("text-danger");
+                    check=false;
+                } else {
+                    field.previousElementSibling.classList.remove("text-danger");
+                    field.previousElementSibling.classList.add("text-success");
+                }
+            }
+
+            check=false;
+            if (check) {
+                try{
+                    let res = await axios.post(`https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create`,
+                        {
+                            "payment_type_id": $("#pay-type-id").val(),
+                            "note": "Tintest 123",
+                            "required_note": $("#required-note").val(),
+                            "return_phone": phoneNumberEl.value,
+                            "client_order_code": "",
+                            "to_name": carts.userName,
+                            "to_phone": carts.phone,
+                            "to_address": carts.address,
+                            "to_ward_code": wardEl.value,
+                            "to_district_id": districtEl.value,
+                            "cod_amount": codAmount,
+                            "content": "Theo New York Times",
+                            "weight": 200,
+                            "length": 1,
+                            "width": 19,
+                            "height": 10,
+                            "pick_station_id": shopIdSelectEl.value,
+                            "deliver_station_id": null,
+                            "insurance_value": codAmount,
+                            "service_type_id":2,
+                            "coupon":null,
+                            "pick_shift":[2],
+                            "items": [
+                                {
+                                    "name":"Áo Polo",
+                                    "code":"Polo123",
+                                    "quantity": 1
+                                }
+
+                            ]
+                        });
+                    console.log(res);
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+
+        });
+
+        function isValid(p) {
+            const phoneRe = /^(1\s|1|)?((\(\d{3}\))|\d{3})(\-|\s)?(\d{3})(\-|\s)?(\d{4})$/;
+            const digits = p.replace(/\D/g, "");
+            return phoneRe.test(digits);
+        };
+
+        function renderModelData(cart) {
+            carts=cart;
+            nameEl.value= carts.userName;
+            phoneNumberEl.value= carts.phone;
+            let start= carts.address.indexOf("(");
+            let end= carts.address.indexOf(")");
+            let text = carts.address.substring(start+1,end);
+            const arrAddress = text.split(",");
+            addressEl.value= carts.address.substring(0,parseInt(arrAddress[3])).trim();
+            getProvinces(arrAddress);
+        }
+
+        const renderProvince = (arr) => {
+            let html = `<option value=""> Choose option</option>`;
+            for (let pr of arr) {
+                html += `<option value ="${pr.ProvinceID}">${pr.ProvinceName}</option>`;
+            }
+            provinceEl.innerHTML = html;
+
+        };
+
+        const renderDistrict = (arr) => {
+            let html = `<option value=""> Choose option</option>`;
+            for (let pr of arr) {
+                html += `<option value ="${pr.DistrictID}">${pr.DistrictName}</option>`;
+            }
+            districtEl.innerHTML = html;
+        };
+
+        const renderWard = (arr) => {
+            let html = "<option> Choose option</option>";
+            for (let pr of arr) {
+                html += `<option value ="${pr.WardCode}">${pr.WardName}</option>`;
+            }
+            wardEl.innerHTML = html;
+        };
+
+        const getProvinces = async (arrAddress) => {
+            try {
+                //goi tinh thanh pho
+                let res = await axios.get("https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province", {
+                    headers: {
+                        "token":'ecff76fb-3a60-11ed-99e9-a2f20c1501aa'
+                    }
+                });
+                renderProvince(res.data.data);
+                provinceEl.value= parseInt(arrAddress[2]);
+                await getDistrict(parseInt(arrAddress[2]));
+                districtEl.value= parseInt(arrAddress[1]);
+                await getWard(parseInt(arrAddress[1]));
+                wardEl.value=arrAddress[0];
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+
+
+        const getDistrict = async (provinceId) => {
+            if (provinceId!= null){
+                try {
+                    //goi tinh thanh pho
+                    let res = await axios.post("https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district",{"province_id":provinceId}, {
+                        headers: {
+                            "token":'ecff76fb-3a60-11ed-99e9-a2f20c1501aa'
+                        }
+                    });
+                    renderDistrict(res.data.data);
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        };
+
+        const getWard = async (districtId) => {
+            if (districtId!=null){
+                try {
+                    //goi tinh thanh pho
+                    let res = await axios.post("https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward",{"district_id": districtId}, {
+                        headers: {
+                            "token":'ecff76fb-3a60-11ed-99e9-a2f20c1501aa'
+                        }
+                    });
+                    renderWard(res.data.data);
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        };
+
+        districtEl.addEventListener('change', function (){
+            getWard(parseInt(districtEl.value));
+        });
+
+        provinceEl.addEventListener('change', function (){
+            getDistrict(parseInt(provinceEl.value));
+        });
+    </script>
+    <script th:src="@{/assets/js/plugins.js}"></script>
+    <script th:src="@{/assets/js/main.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</th:block>
+</body>
+
+</html>
