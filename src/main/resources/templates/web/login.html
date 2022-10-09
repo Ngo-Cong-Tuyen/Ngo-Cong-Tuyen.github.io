@@ -171,14 +171,7 @@
                 alert("Password  too short");
                 return false;
             }
-            let pw = passwordEl.value;
-            if ( /[A-Z]/       .test(pw) &&
-                /[a-z]/       .test(pw) &&
-                /[0-9]/       .test(pw) &&
-                /[^A-Za-z0-9]/.test(pw)) return true; else {
-                alert("Password have to included words and numbers");
-                return false;
-            };
+            return true;
         };
         btnLogin && btnLogin.addEventListener("click", async () => {
             try {
