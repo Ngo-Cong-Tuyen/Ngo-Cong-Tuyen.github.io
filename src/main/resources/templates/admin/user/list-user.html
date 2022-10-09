@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout-admin :: main-fragment(
+        ~{:: title},
+        ~{},
+        ~{:: .content-wrapper},
+        ~{:: #js}
+      )}
+">
+
+<head>
+    <title>List-user</title>
+</head>
+
+<body>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a th:href="@{/admin}">Trang chủ</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            Danh sách user
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row py-2">
+                <div class="col-12">
+                    <a th:href="@{/admin/products/create}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Thêm sản phẩm mới
+                    </a>
+                    <a th:href="@{/admin/products}" class="btn btn-info">
+                        <i class="fas fa-redo"></i> Refresh
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th width="10"><input type="checkbox" id="all"></th>
+                                    <th>Tên</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Email</th>
+                                    <th>Enabled</th>
+                                    <th>Roles</th>
+                                    <th>Chức năng</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="user, stat: ${users}">
+                                    <td width="10" th:text="${stat.index+1}"></td>
+                                    <td th:text="${user.name}">Name</td>
+                                    <td th:text="${user.phone}">phone</td>
+                                    <td th:text="${user.email}">email</td>
+                                    <td th:text="${user.enabled}">enabled</td>
+                                    <td th:text="${T(com.example.coron.util.Utils).renderRoles(user.role)}">role</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm trash" type="button" title="Nâng quyền"
+                                                th:if="!${user.role.contains('EDITOR')}" th:onclick="powerAuthority([[${user.id}]])"><i class="fas fa-arrow-up"></i>
+                                        </button>
+                                        <button class="btn btn-warning btn-sm trash" type="button" title="Hạ quyền"
+                                                th:if="${user.role.contains('EDITOR')}" th:onclick="lowerAuthority([[${user.id}]])"><i class="fas fa-arrow-down"></i>
+                                        </button>
+                                        <button class="btn btn-success btn-sm edit" type="button" title="Kích hoạt"
+                                                th:if="${user.enabled}==null or !${user.enabled}" th:onclick="enableAccount([[${user.id}]])"><i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm edit" type="button" title="Khóa"
+                                                th:if="${user.enabled}" th:onclick="disableAccount([[${user.id}]])"><i class="fas fa-edit"></i>
+                                        </button>
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="d-flex justify-content-center mt-3" id="pagination">
+                                <ul class="pagination mb-0">
+                                    <li class="paginate_button page-item previous disabled"
+                                        id="example2_previous">
+                                        <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0"
+                                           class="page-link">Previous</a>
+                                    </li>
+                                    <li class="paginate_button page-item active">
+                                        <a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0"
+                                           class="page-link">1</a>
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                        <a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0"
+                                           class="page-link">2</a>
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                        <a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0"
+                                           class="page-link">3</a>
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                        <a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0"
+                                           class="page-link">4</a>
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                        <a href="#" aria-controls="example2" data-dt-idx="5" tabindex="0"
+                                           class="page-link">5</a>
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                        <a href="#" aria-controls="example2" data-dt-idx="6" tabindex="0"
+                                           class="page-link">6</a>
+                                    </li>
+                                    <li class="paginate_button page-item next" id="example2_next">
+                                        <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0"
+                                           class="page-link">Next</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+<th:block id="js">
+    <script th:inline="javascript">
+        async function powerAuthority(userId){
+            try{
+                let res = await axios.put(`/api/v2/admin/users/${userId}/power`);
+                console.log(res);
+                alert(res.data.message);
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500)
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        async function lowerAuthority(userId){
+            try{
+                let res = await axios.put(`/api/v2/admin/users/${userId}/lower`);
+                console.log(res);
+                alert(res.data.message);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500)
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        async function enableAccount(userId){
+            try{
+                let res = await axios.put(`/api/v2/admin/users/${userId}/enable`);
+                console.log(res);
+                alert(res.data.message);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500)
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        async function disableAccount(userId){
+            try{
+                let res = await axios.put(`/api/v2/admin/users/${userId}/disable`);
+                console.log(res);
+                alert(res.data.message);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500)
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+    </script>
+</th:block>
+</body>
+
+</html>

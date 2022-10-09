@@ -1,0 +1,35 @@
+﻿<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(
+        ~{:: title},
+        ~{},
+        ~{:: .content},
+        ~{}
+      )}"
+>
+    <head>
+        <title>Coron- 404</title>
+    </head>
+    <body>
+        <th:block class="content">
+            <!--error section area start-->
+            <div class="error_section">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="error_form">
+                            <h1>404</h1>
+                            <h2>Opps! PAGE NOT BE FOUND</h2>
+                            <p>Sorry but the page you are looking for does not exist, have been<br> removed, name changed or is temporarity unavailable.</p>
+                            <form action="#">
+                                <input placeholder="Search..." type="text">
+                                <button type="submit"><i class="fa fa-search"></i></button>
+                            </form>
+                            <a  href="../web/index.html">Back to home page</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--error section area end-->
+        </th:block>
+    </body>
+</html>

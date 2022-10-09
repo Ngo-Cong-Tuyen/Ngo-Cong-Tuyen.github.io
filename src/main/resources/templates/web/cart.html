@@ -1,0 +1,157 @@
+﻿<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(
+        ~{:: title},
+        ~{},
+        ~{:: .content},
+        ~{:: #js}
+      )}"
+>
+    <head>
+        <title>Coron-cart</title>
+    </head>
+    <body>
+        <th:block class="content">
+            <!--breadcrumbs area start-->
+            <div class="breadcrumbs_area">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="breadcrumb_content">
+                            <ul>
+                                <li><a th:href="@{/}">home</a></li>
+                                <li><i class="fa fa-angle-right"></i></li>
+                                <li>Shopping Cart</li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--breadcrumbs area end-->
+
+            <!--shopping cart area start -->
+            <div class="shopping_cart_area">
+                <form action="#">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="table_desc">
+                                <div class="cart_page table-responsive">
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th class="product_remove">Delete</th>
+                                            <th class="product_thumb">Image</th>
+                                            <th class="product_name">Product</th>
+                                            <th class="product-price">Price</th>
+                                            <th class="product_quantity">Quantity</th>
+                                            <th class="product_total">Total</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="cart: ${carts}">
+                                            <td class="product_remove"><a href="#" th:attr="onclick=|deleteProdcutInCart('${cart.cartId}')|" ><i class="fa fa-trash-o"></i></a></td>
+                                            <td class="product_thumb"><a th:href="@{/single-product/{sku} (sku=${cart.sku})}">
+                                                <img style="width: 50%" th:src="@{'/'+${cart.image}}" alt=""></a></td>
+                                            <td class="product_name"><a th:href="@{/single-product/{sku} (sku=${cart.sku})}" th:text="${cart.productName}">Handbag fringilla</a></td>
+                                            <td class="product-price" th:text="${T(com.example.coron.util.Utils).money(cart.price)}">£65.00</td>
+                                            <td class="product_quantity"><input min="0" max="100" th:value="${cart.quantity}" type="number" onchange="totalMoneyProduct(this)"></td>
+                                            <td class="product_total" th:text="${T(com.example.coron.util.Utils).money(cart.price * cart.quantity)}" th:value="${cart.price}">£130.00</td>
+                                        </tr>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="cart_submit">
+                                    <button type="submit">update cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--coupon code area start-->
+                    <div class="coupon_area">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="coupon_code">
+                                    <h3>Coupon</h3>
+                                    <div class="coupon_inner">
+                                        <p>Enter your coupon code if you have one.</p>
+                                        <input placeholder="Coupon code" type="text">
+                                        <button type="submit">Apply coupon</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="coupon_code">
+                                    <h3>Cart Totals</h3>
+                                    <div class="coupon_inner">
+                                        <div class="cart_subtotal">
+                                            <p>Subtotal</p>
+                                            <p class="cart_amount" th:text="${T(com.example.coron.util.Utils).subTotal(carts)}">£215.00</p>
+                                        </div>
+                                        <div class="cart_subtotal ">
+                                            <p>Shipping</p>
+                                            <p class="cart_amount"><span>About:</span>  30.000 đ</p>
+                                        </div>
+                                        <a href="#">Calculate shipping</a>
+
+                                        <div class="cart_subtotal">
+                                            <p>Total</p>
+                                            <p class="cart_amount" th:text="${T(com.example.coron.util.Utils).total(carts)}">£215.00</p>
+                                        </div>
+                                        <div class="checkout_btn">
+                                            <a href="#" id="checkout">Proceed to Checkout</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--coupon code area end-->
+                </form>
+            </div>
+            <!--shopping cart area end -->
+
+        </th:block>
+
+    <th:block id="js">
+        <script th:inline="javascript">
+            const authentication = [[${#authentication}]];
+            const checkAddress= [[${checkAddress}]];
+            function totalMoneyProduct(quantityEl){
+                let price = quantityEl.parentNode.nextElementSibling.getAttribute('value');
+                let total = price * quantityEl.value;
+                quantityEl.parentNode.nextElementSibling.innerText= `${total} đ`;
+            }
+
+            const checkoutEl = document.getElementById("checkout");
+            checkoutEl.addEventListener('click', async () => {
+                if (checkAddress) {
+                    try {
+                        await axios.post(`/api/cart/${authentication.name}/checkout`);
+                        alert("Checkout Successful!");
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500)
+                    } catch (e) {
+                        console.log(e);
+                    }
+                } else {
+                    alert("Please update address");
+                }
+            })
+
+            async function deleteProdcutInCart(productId){
+                try {
+                    await axios.delete(`/api/cart/${productId}/delete`);
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500)
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+        </script>
+    </th:block>
+    </body>
+</html>

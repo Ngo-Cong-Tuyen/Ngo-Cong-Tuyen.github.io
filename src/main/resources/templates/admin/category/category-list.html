@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout-admin :: main-fragment(
+        ~{:: title},
+        ~{:: #css},
+        ~{:: .content-wrapper},
+        ~{:: #js}
+      )}
+">
+
+<head>
+    <title>Danh sách category</title>
+</head>
+
+<body>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a th:href="@{/admin/dashboard}">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            Category
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row py-2">
+                <div class="col-12">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create-category">
+                        Create
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Categories</th>
+                                    <th>Category Parent</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="category: ${categories}">
+                                    <td th:text="${category.name}">Lập trình Backend</td>
+                                    <td th:text="${category.category?.name}"></td>
+                                    <td>
+                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-update-category"
+                                                th:onclick="transferCategory([[${category}]])">
+                                            Update
+                                        </button>
+                                        <button class="btn btn-danger" th:onclick="deleteCategory([[${category}]])">Delete</button>
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="d-flex justify-content-center mt-3" id="pagination">
+                                <ul class="pagination mb-0">
+                                    <li class="paginate_button page-item previous disabled"
+                                        id="example2_previous">
+                                        <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0"
+                                           class="page-link">Previous</a>
+                                    </li>
+                                    <li class="paginate_button page-item active">
+                                        <a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0"
+                                           class="page-link">1</a>
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                        <a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0"
+                                           class="page-link">2</a>
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                        <a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0"
+                                           class="page-link">3</a>
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                        <a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0"
+                                           class="page-link">4</a>
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                        <a href="#" aria-controls="example2" data-dt-idx="5" tabindex="0"
+                                           class="page-link">5</a>
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                        <a href="#" aria-controls="example2" data-dt-idx="6" tabindex="0"
+                                           class="page-link">6</a>
+                                    </li>
+                                    <li class="paginate_button page-item next" id="example2_next">
+                                        <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0"
+                                           class="page-link">Next</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade" id="modal-create-category" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tạo mới category</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Tên category</label>
+                        <input type="text" class="form-control" id="name-create">
+
+                        <label>Category parent</label>
+                        <div class="w-100">
+                            <select class="form-select form-select-lg w-100" aria-label="Default select example" id="category-parent-create">
+                                <option selected value="">Open this select menu</option>
+                                <option th:each="category: ${categories}" th:text="${category.name}" th:value="${category.id}">
+                                    Java
+                                </option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" id="btn-create">Tạo mới</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="modal-update-category" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Cập nhật category</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Tên category</label>
+                        <input type="text" class="form-control" id="name-update">
+
+                        <label>Category parent</label>
+                        <div class="w-100">
+                            <select class="form-select form-select-lg w-100" aria-label="Default select example" id="category-parent-update">
+                                <option selected value="">Open this select menu</option>
+                                <option th:each="category: ${categories}" th:text="${category.name}" th:value="${category.id}">
+                                    Java
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" id="btn-update">Cập nhật</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<th:block id="js">
+    <script th:inline="javascript">
+        let id =0;
+        function transferCategory(Category){
+            console.log(Category)
+            console.log(Category.name)
+            $("#name-update").val(Category.name);
+            id= Category.id;
+        }
+        const btnCreate = document.getElementById("btn-create");
+        const nameCreateInput = document.getElementById("name-create");
+        const categoryParent = document.getElementById("category-parent-create");
+        btnCreate.addEventListener("click", async () => {
+            try{
+                await axios.post('/api/admin/categories/create',{
+                    name: nameCreateInput.value,
+                    categoryId: categoryParent.value
+                })
+                alert("Creating Successful!");
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500)
+            } catch (e) {
+                console.log(e);
+            }
+        });
+
+        const btnUpdate = document.getElementById("btn-update");
+        const nameUpdateInput = document.getElementById("name-update");
+        const categoryParentUpdate = document.getElementById("category-parent-update");
+        btnUpdate.addEventListener("click", async () => {
+            try{
+                await axios.put(`/api/admin/categories/${id}/update`,{
+                    name: nameUpdateInput.value,
+                    categoryId: categoryParentUpdate.value
+                })
+                alert("Updating Successful!");
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500)
+            } catch (e) {
+                console.log(e);
+            }
+        });
+        async function deleteCategory(Category){
+            try{
+                await axios.delete(`/api/admin/categories/${Category.id}/delete`);
+                alert("Delete Successful!");
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500)
+            } catch (e) {
+                console.log(e);
+            }
+        }
+    </script>
+</th:block>
+
+</body>
+
+</html>

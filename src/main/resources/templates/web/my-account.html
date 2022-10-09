@@ -1,0 +1,226 @@
+﻿<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(
+        ~{:: title},
+        ~{:: #css},
+        ~{:: .content},
+        ~{:: #js}
+      )}"
+>
+    <head>
+        <title>Coron-my account</title>
+
+    </head>
+    <body>
+    <th:block class="content">
+        <!--breadcrumbs area start-->
+        <div class="breadcrumbs_area">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb_content">
+                        <ul>
+                            <li><a href="index.html">home</a></li>
+                            <li><i class="fa fa-angle-right"></i></li>
+                            <li>my account</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--breadcrumbs area end-->
+
+        <!--account area start-->
+        <div class="container d-flex justify-content-center">
+            <div class="col-lg-6 col-md-6 mt-4">
+                <div class="account_form">
+                    <h2>Your account information</h2>
+                    <form action="#">
+                        <p>
+                            <label for="name" class="form-label">Name <span>*</span></label>
+                            <input type="text" class="form-control" id="name">
+                        </p>
+                        <p>
+                            <label for="phone-number" class="form-label">Phone Number<span>*</span></label>
+                            <input type="text" class="form-control" id="phone-number">
+                        </p>
+                        <p>
+                            <label  class="form-label">Address <span>*</span></label>
+                            <input type="text" class="form-control" id="address">
+                        </p>
+
+                        <p >
+                            <label for="province" class="form-label w-100" >Province <span>*</span></label>
+                            <select class="form-select w-100 mb-3" id="province"></select>
+                        </p>
+                        <p >
+                            <label for="district" class="form-label w-100" >District <span>*</span></label>
+                            <select class="form-select w-100 mb-3" id="district"></select>
+                        </p>
+                        <p >
+                            <label for="ward" class="form-label w-100" >Ward <span>*</span></label>
+                            <select class="form-select w-100 mb-3" id="ward"></select>
+                        </p>
+                        <div class="login_submit">
+                            <button type="button" id="btn-update">Update account</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--account area end-->
+    </th:block>
+    <th:block id="js">
+        <script th:inline="javascript">
+            const provinceEl = document.getElementById("province");
+            const districtEl = document.getElementById("district");
+            const wardEl = document.getElementById("ward");
+            const addressEl = document.getElementById("address");
+            const btnUpdate = document.getElementById("btn-update");
+            const childEls = document.querySelectorAll(".account_form input,select");
+            const phoneNumberEl = document.getElementById("phone-number");
+            const nameEl = document.getElementById('name');
+            const accountInfo= [[${accountInfo}]];
+            console.log(accountInfo);
+
+            // Render account info
+            nameEl.value= accountInfo.name;
+            phoneNumberEl.value= accountInfo.phoneNumber;
+            let start= accountInfo.address.indexOf("(");
+            let end= accountInfo.address.indexOf(")");
+            let text = accountInfo.address.substring(start+1,end);
+            const arrAddress = text.split(",");
+            addressEl.value= accountInfo.address.substring(0,parseInt(arrAddress[3])).trim();
+            // Check validate form and send api update account
+            btnUpdate.addEventListener('click', async function (){
+                let check = true;
+                for ( let child of childEls) {
+                    if (child.value=="") {
+                        child.previousElementSibling.classList.add("text-danger");
+                        check= false;
+                    } else {
+                        child.previousElementSibling.classList.add("text-success");
+                    }
+                }
+
+                if (!isValid(phoneNumberEl.value)) {
+                    phoneNumberEl.previousElementSibling.classList.add("text-danger");
+                    check= false;
+                }
+
+                console.log(check);
+                if (check) {
+                    let province = provinceEl.options[provinceEl.selectedIndex].innerText;
+                    let district = districtEl.options[districtEl.selectedIndex].innerText;
+                    let ward = wardEl.options[wardEl.selectedIndex].innerText;
+                    let address= addressEl.value+ " ," + ward+ " ," + district+ " ,"  + province + `(${wardEl.value},${districtEl.value},${provinceEl.value},${addressEl.value.length})`;
+                    console.log(address);
+                    try{
+                        await axios.put(`api/v1/my-account/update`,{
+                            name: nameEl.value,
+                            phoneNumber: phoneNumberEl.value,
+                            address: address
+                        });
+                        alert("Update account successfully");
+                    } catch (e){
+                        console.log(e);
+                    }
+                }
+            });
+
+            function isValid(p) {
+                const phoneRe = /^(1\s|1|)?((\(\d{3}\))|\d{3})(\-|\s)?(\d{3})(\-|\s)?(\d{4})$/;
+                const digits = p.replace(/\D/g, "");
+                return phoneRe.test(digits);
+            };
+
+            const renderProvince = (arr) => {
+                let html = `<option value=""> Choose option</option>`;
+                for (let pr of arr) {
+                    html += `<option value ="${pr.ProvinceID}">${pr.ProvinceName}</option>`;
+                }
+                provinceEl.innerHTML = html;
+
+            };
+
+            const renderDistrict = (arr) => {
+                let html = `<option value=""> Choose option</option>`;
+                for (let pr of arr) {
+                    html += `<option value ="${pr.DistrictID}">${pr.DistrictName}</option>`;
+                }
+                districtEl.innerHTML = html;
+            };
+
+            const renderWard = (arr) => {
+                let html = "<option> Choose option</option>";
+                for (let pr of arr) {
+                    html += `<option value ="${pr.WardCode}">${pr.WardName}</option>`;
+                }
+                wardEl.innerHTML = html;
+            };
+
+            const getProvinces = async () => {
+                try {
+                    //goi tinh thanh pho
+                    let res = await axios.get("https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province", {
+                        headers: {
+                            "token":'ecff76fb-3a60-11ed-99e9-a2f20c1501aa'
+                        }
+                    });
+                    renderProvince(res.data.data);
+                    provinceEl.value= parseInt(arrAddress[2]);
+                    await getDistrict(parseInt(arrAddress[2]));
+                    districtEl.value= parseInt(arrAddress[1]);
+                    await getWard(parseInt(arrAddress[1]));
+                    wardEl.value=arrAddress[0];
+                } catch (error) {
+                    console.log(error);
+                }
+            };
+
+            getProvinces();
+
+            const getDistrict = async (provinceId) => {
+                if (provinceId!= null){
+                    try {
+                        //goi tinh thanh pho
+                        let res = await axios.post("https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district",{"province_id":provinceId}, {
+                            headers: {
+                                "token":'ecff76fb-3a60-11ed-99e9-a2f20c1501aa'
+                            }
+                        });
+                        renderDistrict(res.data.data);
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+            };
+
+            const getWard = async (districtId) => {
+                if (districtId!=null){
+                    try {
+                        //goi tinh thanh pho
+                        let res = await axios.post("https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward",{"district_id": districtId}, {
+                            headers: {
+                                "token":'ecff76fb-3a60-11ed-99e9-a2f20c1501aa'
+                            }
+                        });
+                        renderWard(res.data.data);
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+            };
+
+            districtEl.addEventListener('change', function (){
+                getWard(parseInt(districtEl.value));
+            });
+
+            provinceEl.addEventListener('change', function (){
+                getDistrict(parseInt(provinceEl.value));
+            });
+
+        </script>
+    </th:block>
+    </body>
+</html>

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout-admin :: main-fragment(
+        ~{:: title},
+        ~{:: #css},
+        ~{:: .content-wrapper},
+        ~{:: #js}
+      )}
+">
+
+<head>
+    <title>Thêm sản phẩm</title>
+
+    <th:block id="css">
+        <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css"/>
+
+        <link rel="stylesheet" th:href="@{/admin-lte/plugins/select2/css/select2.min.css}"/>
+        <link rel="stylesheet" th:href="@{/admin-lte/dist/css/style.css}">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.css"
+              integrity="sha512-QmxybGIvkSI8+CGxkt5JAcGOKIzHDqBMs/hdemwisj4EeGLMXxCm9h8YgoCwIvndnuN1NdZxT4pdsesLXSaKaA=="
+              crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <style>
+            #amount select,input {
+                border: none;
+            }
+        </style>
+    </th:block>
+</head>
+
+<body>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a th:href="@{/admin/dashboard}">Trang chủ</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a th:href="@{/admin/products}">Tất cả sản phẩm</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            Thêm sản phẩm
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row py-2">
+                <div class="col-6">
+                    <a th:href="@{/admin/products}" class="btn btn-default">
+                        <i class="fas fa-chevron-left"></i> Quay lại
+                    </a>
+                    <button type="button" class="btn btn-info px-4" id="btn-create">
+                        Lưu
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label>Mã sản phẩm</label>
+                                        <input type="text" class="form-control" id="sku"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Tên sản phẩm</label>
+                                        <input type="text" class="form-control" id="name"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Nội dung</label>
+                                        <textarea id="content"></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Mô tả ngắn</label>
+                                        <textarea id="description" class="form-control" rows="3"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Giá bán</label>
+                                        <input type="number" class="form-control" id="price"/>
+                                    </div>
+
+                                    <div class="form-group w-100">
+                                        <label>Danh mục</label>
+                                        <div class="select2-purple">
+                                            <select class="select2 form-control" multiple="multiple" id="category">
+                                                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Nam</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Images</label>
+                                        <div class="avatar-preview mb-3 rounded">
+                                            <img
+                                                    src="https://via.placeholder.com/200"
+                                                    alt="avatar"
+                                                    id="avatar-preview"
+                                                    class="rounded"
+                                            />
+                                        </div>
+
+                                        <button
+                                                id="btn-modal-image"
+                                                type="button"
+                                                class="btn btn-warning"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modal-image"
+                                        >
+                                            Chọn ảnh
+                                        </button>
+                                    </div>
+                                    <table class="table table-bordered table-responsive-sm" id="amount">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Kích thước</th>
+                                            <th scope="col">Màu sắc</th>
+                                            <th scope="col">Số lượng</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="amount-container">
+
+                                        </tbody>
+                                    </table>
+                                    <button type="button" class="btn btn-success" id="btn-add-product">Add a product</button>
+                                    <button type="button" class="btn btn-danger" id="btn-delete-product">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="modal fade" id="modal-xl" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Extra Large Modal</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>One fine body…</p>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                        Save changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal chọn ảnh -->
+    <div
+            class="modal fade"
+            id="modal-image"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Danh sách ảnh</h5>
+                    <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <button class="btn btn-success" id="btn-chose-image" disabled>
+                                Chọn ảnh
+                            </button>
+
+                            <label for="avatar" class="btn btn-warning">Upload ảnh</label>
+                            <input type="file" id="avatar" class="d-none" />
+                        </div>
+                        <div>
+                            <button class="btn btn-danger" id="btn-delete-image" disabled>
+                                Xóa ảnh
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Hiển thị danh sách ảnh -->
+                    <div class="image-container mt-4 mb-4">
+
+                    </div>
+
+                    <!-- Hiển thị phần phân trang -->
+                    <div
+                            class="pagination-container d-flex justify-content-center"
+                    ></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<th:block id="js">
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js"></script>
+
+    <script th:src="@{/admin-lte/plugins/select2/js/select2.full.min.js}"></script>
+
+    <script th:inline="javascript">
+        const btnCreate = document.getElementById("btn-create");
+        const skuEl = document.getElementById("sku");
+        const nameProductEl = document.getElementById("name");
+        const descriptionEl = document.getElementById("description");
+        const priceEl = document.getElementById("price");
+        const categoryEl = document.getElementById("category");
+        const btnAddProduct = document.getElementById("btn-add-product");
+        const amountContainerEl = document.getElementById("amount-container");
+        //Initialize Select2 Elements
+        $(".select2").select2();
+
+        // Initialize editor
+        const easyMDE = new EasyMDE({
+            element: document.getElementById("content"),
+            spellChecker: false,
+            maxHeight: "500px",
+            renderingConfig: {
+                codeSyntaxHighlighting: true,
+            },
+        });
+        let amounts= [];
+        const product= [[${product}]];
+        let categories= [];
+        for (let category of product.categories) {
+            categories.push(category.id);
+        }
+        // Init data
+        const initData= (product) => {
+            skuEl.value = product.sku;
+            nameProductEl.value = product.name;
+            easyMDE.value(product.content);
+            descriptionEl.value= product.description;
+            priceEl.value= product.price;
+            $("#category").val(categories).trigger('change');
+            console.log(categories);
+        }
+
+        initData(product);
+
+        for (let amount of product.amounts){
+            let row = document.createElement("tr");
+            row.innerHTML=`<th scope="row"><input  type="checkbox"></th>
+                                            <th scope="row" class="count">1</th>
+                                            <td>
+                                                <select  class="form-select form-select-lg mb-3 size-product" >
+                                                    <option value="XS" >XS</option>
+                                                    <option value="S">S</option>
+                                                    <option value="M">M</option>
+                                                    <option value="L">L</option>
+                                                    <option value="XL">XL</option>
+                                                    <option value="XXL">XXL</option>
+                                                 </select>
+                                            </td>
+                                            <td><input type="text" value="${amount.color}"></td>
+                                            <td><input type="number" value="${amount.quantity}"></td>`;
+            row.querySelector('select').value= amount.size;
+            amounts.push(row);
+        }
+        renderTable(amounts);
+        // Add product process
+
+
+        btnAddProduct.addEventListener("click", function (){
+            let html = amountContainerEl.innerHTML;
+            let row = document.createElement("tr");
+            row.innerHTML=`                                            <th scope="row"><input  type="checkbox"></th>
+                                            <th scope="row" class="count">1</th>
+                                            <td>
+                                                <select  class="form-select form-select-lg mb-3 size-product" >
+                                                    <option>XS</option>
+                                                    <option>S</option>
+                                                    <option>M</option>
+                                                    <option>L</option>
+                                                    <option>XL</option>
+                                                    <option>XXL</option>
+                                                 </select>
+                                            </td>
+                                            <td><input type="text" value=""></td>
+                                            <td><input type="number" value=""></td>`;
+            amounts.push(row);
+            renderTable(amounts);
+            console.log(amounts);
+        })
+
+        // Render table
+        function renderTable(arr){
+            amountContainerEl.innerHTML="";
+            for (let i=0; i< arr.length; i++) {
+                let row = arr[i];
+                row.querySelector(".count").innerText= i+1;
+                amountContainerEl.appendChild(row);
+            }
+            console.log(amountContainerEl);
+        }
+
+        // Delete row in table process
+        const deleteBtn = document.getElementById("btn-delete-product");
+
+        deleteBtn.addEventListener("click", function (){
+            for (let i=0; i< amounts.length; i++) {
+                let row = amounts[i];
+                let input= row.querySelector("input");
+                if (input.checked== true){
+                    amounts.splice(i,1);
+                    i--;
+                }
+            }
+            console.log(amounts);
+            renderTable(amounts);
+        })
+
+        // Update
+        btnCreate.addEventListener("click", async () => {
+            try{
+                let amountRequest = [];
+                for (let row of amounts) {
+                    let amount= {
+                        "size": row.querySelector(".size-product").value,
+                        "color": row.querySelectorAll("input")[1].value,
+                        "quantity": row.querySelectorAll("input")[2].value
+                    }
+                    amountRequest.push(amount);
+                }
+                await axios.put(`/api/admin/products/${product.sku}`,{
+                    sku: skuEl.value,
+                    name: nameProductEl.value,
+                    content: easyMDE.value(),
+                    description: descriptionEl.value,
+                    price: priceEl.value,
+                    categories:$("#category").val().map(Number),
+                    amounts: amountRequest
+                })
+                alert("Updating Successful!");
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500)
+            }  catch (e) {
+                console.log(e);
+            }
+        });
+        let userId = 1;
+
+        // Truy cập
+        const avatarEl = document.getElementById("avatar");
+        const avatarPreviewEl = document.getElementById("avatar-preview");
+
+        const btnModalImage = document.getElementById("btn-modal-image");
+        const imageContainerEl = document.querySelector(".image-container");
+
+        const btnChoseImage = document.getElementById("btn-chose-image");
+        const btnDeleteImage = document.getElementById("btn-delete-image");
+
+        const modelImageEl = document.getElementById("modal-image");
+
+        const modelImageConfig = new bootstrap.Modal(modelImageEl, {
+            keyboard: false
+        })
+
+        // Khai báo biến
+        let listImage = [];
+
+        avatarEl.addEventListener("change", async function (event) {
+            try {
+                // Lấy ra file cần upload dựa vào event
+                let file = event.target.files[0];
+
+                // Tạo formData và append file vào
+                let formData = new FormData();
+                formData.append("file", file);
+
+                // Gọi API
+                let res = await axios.post(`/api/v1/products/${product.sku}/upload-image`, formData)
+
+                // Thêm vào mảng ban đầu, mới nhất thì cho lên đầu
+                listImage.unshift(res.data);
+
+                // Hiển thị lại trên giao diện
+                renderImageAndPagination(listImage);
+            } catch (error) {
+                console.log(error);
+            }
+        })
+
+        // Hiển thị danh sách hình ảnh
+        btnModalImage.addEventListener("click", async () => {
+            try {
+                // Gọi API
+                let res = await axios.get(`/api/v1/products/${product.sku}/files`);
+
+                // Lưu lại ảnh của user
+                listImage = res.data;
+                // Hiển thị ra ngoài giao diện
+                renderImageAndPagination(listImage);
+            } catch (error) {
+                console.log(error);
+                console.log("Loi tai day");
+            }
+        });
+
+        // Hiển thị hình ảnh và phân trang
+        const renderImageAndPagination = arr => {
+            $('.pagination-container').pagination({
+                dataSource: arr,
+                pageSize: 4,
+                className: 'paginationjs-theme-blue paginationjs-big',
+                callback: function (data) {
+                    renderImg(data);
+                }
+            })
+        }
+
+        // Hiển thị danh sách hình ảnh ra ngoài giao diện
+        function renderImg(arr) {
+            imageContainerEl.innerHTML = '';
+
+            let html = "";
+            arr.forEach(i => {
+                html += `
+            <div class="image-item" onclick="choseImage(this)">
+                <img src="http://localhost:8080/${i}" alt="" data-src=${i}>
+            </div>
+        `
+            });
+            imageContainerEl.innerHTML = html;
+        }
+
+        // CHọn ảnh
+        const choseImage = (ele) => {
+            // Tìm kiếm image đang được active
+            let imageSelected = document.querySelector(".selected");
+
+            // Nếu tồn tại thì xóa class "border-primary", "selected" trong image đó đi
+            if (imageSelected) {
+                imageSelected.classList.remove("border-primary", "selected");
+            }
+
+            // Thêm class "border-primary", "selected" vào image đang được click
+            ele.classList.add("border-primary", "selected");
+
+            // Bỏ "disabled" ở 2 nút "Chọn ảnh" và "Xóa ảnh" để có thể thực hiện chức năng
+            btnChoseImage.disabled = false;
+            btnDeleteImage.disabled = false;
+        }
+
+        // Lắng nghe sự hiện đóng modal để disabled 2 nút "Chọn ảnh" và "Xóa ảnh"
+        modelImageEl.addEventListener('hidden.bs.modal', function () {
+            btnChoseImage.disabled = true;
+            btnDeleteImage.disabled = true;
+        })
+        let images = [[${images}]];
+        avatarPreviewEl.src = "http://localhost:8080/" + images[0];
+        // Cập nhật avatar
+        btnChoseImage.addEventListener("click", async function () {
+            try {
+                // Lấy ra ảnh đang được chọn
+                let imageSelected = document.querySelector(".selected img");
+
+                // Lấy URL của ảnh đang chọn
+                let src = imageSelected.dataset.src;
+
+                // Gọi API
+                let res = await axios.put(`http://localhost:8080/api/v1/users/${userId}/update-avatar`, {
+                    avatar: src
+                });
+
+                // Đóng modal
+                modelImageConfig.hide();
+
+                // Hiển thị ảnh trên giao diện
+                avatarPreviewEl.src = "http://localhost:8080" + res.data;
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        // Xóa ảnh
+        btnDeleteImage.addEventListener("click", async () => {
+            try {
+                // Lấy ra ảnh đang được chọn
+                let imageSelected = document.querySelector(".selected img");
+
+                // Gửi API xóa ảnh
+                await axios.delete(imageSelected.src);
+
+                // Xóa ảnh trong mảng ban đầu
+                let src = imageSelected.dataset.src;
+                listImage = listImage.filter(i => i != src);
+
+                // Render lại giao diện
+                renderImageAndPagination(listImage);
+
+                // disabled 2 nút "Chọn ảnh" và "Xóa ảnh"
+                btnChoseImage.disabled = true;
+                btnDeleteImage.disabled = true;
+            } catch (error) {
+                console.log(error);
+            }
+        });
+    </script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    ></script>
+    <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"
+    ></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.min.js"
+            integrity="sha512-1zzZ0ynR2KXnFskJ1C2s+7TIEewmkB2y+5o/+ahF7mwNj9n3PnzARpqalvtjSbUETwx6yuxP5AJXZCpnjEJkQw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    ></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.min.js" integrity="sha512-1zzZ0ynR2KXnFskJ1C2s+7TIEewmkB2y+5o/+ahF7mwNj9n3PnzARpqalvtjSbUETwx6yuxP5AJXZCpnjEJkQw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</th:block>
+</body>
+
+</html>
