@@ -90,6 +90,10 @@ public class ProductService {
         List<Product> products= productRepository.findAll();
         return mapperProductToProductDto(products);
     }
+    public List<ProductDto> getAllHotProductDto() {
+        List<Product> products= productRepository.findAll();
+        return mapperProductToProductDto(products);
+    }
 
     public List<ProductDto> mapperProductToProductDto(List<Product> products) {
         return products.stream()

@@ -4,6 +4,7 @@ import com.example.coron.dto.ProductInfo;
 import com.example.coron.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -17,6 +18,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             " where concat(p.name, ' ', p.sku ) like %?1%" +
             "and categories.name like ?2%")
     Page<Product> getAllProductInfo(String keyword,String category, Pageable pageable);
+
 
 
 }
