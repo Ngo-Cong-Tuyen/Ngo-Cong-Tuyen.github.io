@@ -25,7 +25,7 @@ import java.util.List;
 @ToString
 @Table(name = "user")
 @TypeDef(name = "json", typeClass = JsonStringType.class)
-public class User {
+public class User implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -50,14 +50,6 @@ public class User {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "province")
-    private String provice;
-
-    @Column(name = "district")
-    private String district;
-
-    @Column(name = "ward")
-    private String ward;
     @Column(name = "enabled")
     private Boolean enabled = false;
     @Type(type = "json")
