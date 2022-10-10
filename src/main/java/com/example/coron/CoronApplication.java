@@ -10,11 +10,14 @@ public class CoronApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CoronApplication.class, args);
+
     }
 
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
+
+
 
 }
