@@ -23,7 +23,7 @@ import java.util.List;
 @Setter
 @Entity
 @ToString
-@Table(name = "`user`")
+@Table(name = "`user_account`")
 @TypeDef(name = "json", typeClass = JsonStringType.class)
 public class User implements Serializable{
 
