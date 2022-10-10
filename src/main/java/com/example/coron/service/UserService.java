@@ -7,6 +7,7 @@ import com.example.coron.exception.NotFoundException;
 import com.example.coron.feedback.SimpleFeedback;
 import com.example.coron.repository.UserRepository;
 import com.example.coron.request.AccountRequest;
+import com.example.coron.security.UserDetailsCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -36,9 +37,10 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email).orElseThrow(() -> {
+        User user= userRepository.findByEmail(email).orElseThrow(() -> {
             throw new UsernameNotFoundException("Not found email = " + email);
         });
+        return new UserDetailsCustom(user);
     }
 
     public void updateAccount(String email, AccountRequest request) {
