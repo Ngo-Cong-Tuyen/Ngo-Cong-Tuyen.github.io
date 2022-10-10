@@ -1,7 +1,7 @@
 package com.example.coron.service;
 
-import com.example.coron.entity.Token;
 import com.example.coron.entity.User;
+import com.example.coron.entity.Token;
 import com.example.coron.exception.NotFoundException;
 import com.example.coron.feedback.SimpleFeedback;
 import com.example.coron.repository.TokenRepository;

@@ -54,7 +54,7 @@ class CoronApplicationTests {
                 .role(List.of("USER"))
                 .build();
 
-        userRepository.saveAll(List.of(user1,user2,user3));
+        userRepository.saveAll(List.of(user1, user2, user3));
     }
 
     @Test

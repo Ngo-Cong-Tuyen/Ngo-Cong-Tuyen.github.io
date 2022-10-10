@@ -1,10 +1,8 @@
 package com.example.coron.service;
 
-import com.example.coron.dto.CartInfo;
 import com.example.coron.dto.OrderHeaders;
 import com.example.coron.dto.OrderInfo;
 import com.example.coron.entity.Order;
-import com.example.coron.entity.Shop;
 import com.example.coron.feedback.SimpleFeedback;
 import com.example.coron.mapper.OrderCreateRequestMapper;
 import com.example.coron.mapper.OrderCreateResponseMapper;
@@ -13,7 +11,6 @@ import com.google.gson.Gson;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.net.URI;

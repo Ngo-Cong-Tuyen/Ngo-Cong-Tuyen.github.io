@@ -37,14 +37,14 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user= userRepository.findByEmail(email).orElseThrow(() -> {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> {
             throw new UsernameNotFoundException("Not found email = " + email);
         });
         return new UserDetailsCustom(user);
     }
 
     public void updateAccount(String email, AccountRequest request) {
-        User user= userRepository.findByEmail(email).orElseThrow(()-> {
+        User user = userRepository.findByEmail(email).orElseThrow(()-> {
             throw new NotFoundException("Not found email: "+ email);
         });
         user.setName(request.getName());
@@ -54,7 +54,7 @@ public class UserService implements UserDetailsService {
     }
 
     public AccountInfo getAccountInfo(String email){
-        User user= userRepository.findByEmail(email).orElseThrow(()-> {
+        User user = userRepository.findByEmail(email).orElseThrow(()-> {
             throw new NotFoundException("Not found email: "+ email);
         });
         AccountInfo accountInfo= AccountInfo.builder()

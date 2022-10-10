@@ -2,10 +2,10 @@ package com.example.coron.service;
 
 import com.example.coron.dto.CartInfo;
 import com.example.coron.dto.ListCartInfo;
+import com.example.coron.entity.User;
 import com.example.coron.entity.Amount;
 import com.example.coron.entity.Cart;
 import com.example.coron.entity.Order;
-import com.example.coron.entity.User;
 import com.example.coron.exception.NotFoundException;
 import com.example.coron.feedback.SimpleFeedback;
 import com.example.coron.repository.AmountRepository;
@@ -88,8 +88,8 @@ public class CartService {
        List<ListCartInfo> lists =new ArrayList<>();
        List<User> users = userRepository.findAllById(userIds);
        for (User user : users){
-           List<CartInfo> list= cartInfoList.stream().filter(cartInfo -> cartInfo.getUserId()==user.getId()).collect(Collectors.toList());
-           ListCartInfo listCartInfo= new ListCartInfo(user.getId(),user.getName(),user.getPhone(),user.getAddress(),list);
+           List<CartInfo> list= cartInfoList.stream().filter(cartInfo -> cartInfo.getUserId()== user.getId()).collect(Collectors.toList());
+           ListCartInfo listCartInfo= new ListCartInfo(user.getId(), user.getName(), user.getPhone(), user.getAddress(),list);
            lists.add(listCartInfo);
        };
        return lists;

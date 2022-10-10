@@ -1,10 +1,7 @@
 package com.example.coron.request;
 
-import com.example.coron.entity.Shop;
-import com.example.coron.entity.User;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter

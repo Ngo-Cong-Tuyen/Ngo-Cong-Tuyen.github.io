@@ -1,22 +1,15 @@
 package com.example.coron.controller;
 
-import com.example.coron.dto.CartInfo;
-import com.example.coron.entity.User;
 import com.example.coron.request.CartRequest;
 import com.example.coron.request.ListCartRequest;
-import com.example.coron.security.UserDetailsCustom;
 import com.example.coron.service.AuthService;
 import com.example.coron.service.CartService;
 import com.example.coron.service.ShopService;
 import com.example.coron.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 public class CartController {

@@ -1,8 +1,7 @@
 package com.example.coron.dto;
 
-import com.example.coron.entity.Cart;
-import com.example.coron.entity.Shop;
 import com.example.coron.entity.User;
+import com.example.coron.entity.Shop;
 import lombok.*;
 
 import java.util.List;

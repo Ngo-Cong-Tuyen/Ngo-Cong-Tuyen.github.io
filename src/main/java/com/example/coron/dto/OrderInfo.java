@@ -1,7 +1,5 @@
 package com.example.coron.dto;
 
-import com.example.coron.entity.Shop;
-import com.example.coron.entity.User;
 import lombok.*;
 
 import java.io.Serializable;

@@ -8,7 +8,7 @@
       )}"
 >
     <head>
-        <title>Coron-my account</title>
+        <title>Coron-my user</title>
 
     </head>
     <body>
@@ -21,7 +21,7 @@
                         <ul>
                             <li><a href="index.html">home</a></li>
                             <li><i class="fa fa-angle-right"></i></li>
-                            <li>my account</li>
+                            <li>my user</li>
                         </ul>
 
                     </div>
@@ -30,11 +30,11 @@
         </div>
         <!--breadcrumbs area end-->
 
-        <!--account area start-->
+        <!--user area start-->
         <div class="container d-flex justify-content-center">
             <div class="col-lg-6 col-md-6 mt-4">
                 <div class="account_form">
-                    <h2>Your account information</h2>
+                    <h2>Your user information</h2>
                     <form action="#">
                         <p>
                             <label for="name" class="form-label">Name <span>*</span></label>
@@ -62,13 +62,13 @@
                             <select class="form-select w-100 mb-3" id="ward"></select>
                         </p>
                         <div class="login_submit">
-                            <button type="button" id="btn-update">Update account</button>
+                            <button type="button" id="btn-update">Update user</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-        <!--account area end-->
+        <!--user area end-->
     </th:block>
     <th:block id="js">
         <script th:inline="javascript">
@@ -83,7 +83,7 @@
             const accountInfo= [[${accountInfo}]];
             console.log(accountInfo);
 
-            // Render account info
+            // Render user info
             nameEl.value= accountInfo.name;
             phoneNumberEl.value= accountInfo.phoneNumber;
             let start= accountInfo.address.indexOf("(");
@@ -91,7 +91,7 @@
             let text = accountInfo.address.substring(start+1,end);
             const arrAddress = text.split(",");
             addressEl.value= accountInfo.address.substring(0,parseInt(arrAddress[3])).trim();
-            // Check validate form and send api update account
+            // Check validate form and send api update user
             btnUpdate.addEventListener('click', async function (){
                 let check = true;
                 for ( let child of childEls) {
@@ -116,12 +116,12 @@
                     let address= addressEl.value+ " ," + ward+ " ," + district+ " ,"  + province + `(${wardEl.value},${districtEl.value},${provinceEl.value},${addressEl.value.length})`;
                     console.log(address);
                     try{
-                        await axios.put(`api/v1/my-account/update`,{
+                        await axios.put(`api/v1/my-user/update`,{
                             name: nameEl.value,
                             phoneNumber: phoneNumberEl.value,
                             address: address
                         });
-                        alert("Update account successfully");
+                        alert("Update user successfully");
                     } catch (e){
                         console.log(e);
                     }

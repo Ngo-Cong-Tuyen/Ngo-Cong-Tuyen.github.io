@@ -35,7 +35,7 @@
             <ul>
               <li><a th:href="@{/contact}" title="Contact">Contact</a></li>
               <li th:if="${#authentication.name}!= 'anonymousUser'"><a th:href="@{/wishlist}" title="wishlist">My wishlist</a></li>
-              <li th:if="${#authentication.name}!= 'anonymousUser'"><a th:href="@{/my-account}" title="My account">My account</a></li>
+              <li th:if="${#authentication.name}!= 'anonymousUser'"><a th:href="@{/my-user}" title="My user">My user</a></li>
               <li th:if="${#authentication.name}!= 'anonymousUser'"><a th:href="@{/cart}" title="My cart">My cart</a></li>
               <li>
                 <th:block sec:authorize="not isAuthenticated()">
@@ -269,7 +269,7 @@
                             <li><a href="about.html">About Us </a></li>
                             <li><a href="about-2.html">About Us 2</a></li>
                             <li><a href="services.html">Service </a></li>
-                            <li><a href="my-account.html">my account </a></li>
+                            <li><a href="my-user.html">my user </a></li>
                           </ul>
                         </div>
                         <div>

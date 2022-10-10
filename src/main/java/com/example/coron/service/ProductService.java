@@ -1,7 +1,6 @@
 package com.example.coron.service;
 
 import com.example.coron.dto.ProductDto;
-import com.example.coron.dto.ProductInfo;
 import com.example.coron.dto.ReviewInfo;
 import com.example.coron.entity.*;
 import com.example.coron.exception.NotFoundException;
@@ -18,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;

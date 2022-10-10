@@ -2,13 +2,11 @@ package com.example.coron.repository;
 
 import com.example.coron.dto.CartInfo;
 import com.example.coron.entity.Cart;
-import com.example.coron.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 public interface CartRepository extends JpaRepository<Cart, Integer> {
 

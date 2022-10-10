@@ -4,15 +4,10 @@ import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.*;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 
@@ -23,7 +18,7 @@ import java.util.List;
 @Setter
 @Entity
 @ToString
-@Table(name = "`user_account`")
+@Table(name = "account")
 @TypeDef(name = "json", typeClass = JsonStringType.class)
 public class User implements Serializable{
 
@@ -62,7 +57,7 @@ public class User implements Serializable{
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public User(String name,String phone, String email, String password,String address, List<String> role) {
+    public User(String name, String phone, String email, String password, String address, List<String> role) {
         this.name = name;
         this.phone = phone;
         this.email = email;
