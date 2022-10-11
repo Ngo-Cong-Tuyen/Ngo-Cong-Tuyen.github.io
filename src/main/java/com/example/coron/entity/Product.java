@@ -72,6 +72,14 @@ public class Product {
             joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "categories_id", referencedColumnName = "id"))
     private Collection<Category> categories = new ArrayList<>();
+
+    @ToString.Exclude
+    @ManyToMany
+    @JoinTable(name = "product_materials",
+            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "materials_id", referencedColumnName = "id"))
+    private Collection<Material> materials = new ArrayList<>();
+
     @ToString.Exclude
     @ManyToMany
     @JoinTable(name = "product_tags",
