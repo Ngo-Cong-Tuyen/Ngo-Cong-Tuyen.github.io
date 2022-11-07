@@ -116,7 +116,7 @@
                     let address= addressEl.value+ " ," + ward+ " ," + district+ " ,"  + province + `(${wardEl.value},${districtEl.value},${provinceEl.value},${addressEl.value.length})`;
                     console.log(address);
                     try{
-                        await axios.put(`api/v1/my-user/update`,{
+                        await axios.put(`api/v1/my-account/update`,{
                             name: nameEl.value,
                             phoneNumber: phoneNumberEl.value,
                             address: address

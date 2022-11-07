@@ -114,6 +114,7 @@ public class CartService {
             return feedback;
         }
         listCarts.forEach(cart -> cart.setStatus(statusOut));
+        cartRepository.saveAll(listCarts);
         return feedback;
     }
 

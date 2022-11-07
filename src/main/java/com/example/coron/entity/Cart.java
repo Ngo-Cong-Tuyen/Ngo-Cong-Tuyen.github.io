@@ -9,12 +9,12 @@ import java.time.LocalDateTime;
 @NamedNativeQuery(
         name = "getAllCartInfoByUserId",
         query =
-                "select c.user_id , c.id as cart_id, p.name as product_name, p.sku, p.price, c.quantity ,i.url as image, c.updated_at  from cart c\n" +
+                "select c.user_id , c.id as cart_id,c.status, p.name as product_name, p.sku, p.price, c.quantity ,i.url as image, c.updated_at  from cart c\n" +
                         "                        inner join amount a on a.id = c.amount_id \n" +
                         "                        inner join product p on a.product_id = p.id\n" +
                         "                        inner join image i on i.product_id = p.id\n" +
                         "                        inner join `user` u on u.id = c.user_id \n" +
-                        "                        where c.user_id= ?1 and (c.status is null or c.status =0) \n" +
+                        "                        where c.user_id= ?1 and (c.status <> 2 and c.status<>-1) \n" +
                         "                        group by c.id",
         resultSetMapping = "listCartInfo"
 )
@@ -25,6 +25,7 @@ import java.time.LocalDateTime;
                 columns = {
                         @ColumnResult(name = "user_id", type = Integer.class),
                         @ColumnResult(name = "cart_id", type = Integer.class),
+                        @ColumnResult(name = "status", type = Integer.class),
                         @ColumnResult(name = "product_name" ,type = String.class),
                         @ColumnResult(name = "sku" ,type = String.class),
                         @ColumnResult(name = "price",type = Integer.class),
@@ -38,7 +39,7 @@ import java.time.LocalDateTime;
 @NamedNativeQuery(
         name = "getAllNewCartInfo",
         query =
-                "select c.user_id , c.id as cart_id, p.name as product_name, p.sku, p.price, c.quantity ,i.url as image, c.updated_at  from cart c\n" +
+                "select c.user_id , c.id as cart_id,c.status, p.name as product_name, p.sku, p.price, c.quantity ,i.url as image, c.updated_at  from cart c\n" +
                         "                        inner join amount a on a.id = c.amount_id \n" +
                         "                        inner join product p on a.product_id = p.id\n" +
                         "                        inner join image i on i.product_id = p.id\n" +
@@ -52,7 +53,7 @@ import java.time.LocalDateTime;
 @NamedNativeQuery(
         name = "getAllCartOrder",
         query =
-                "select c.user_id , c.id as cart_id, p.name as product_name, p.sku, p.price, c.quantity ,i.url as image, c.updated_at  from cart c\n" +
+                "select c.user_id , c.id as cart_id,c.status, p.name as product_name, p.sku, p.price, c.quantity ,i.url as image, c.updated_at  from cart c\n" +
                         "                        inner join amount a on a.id = c.amount_id \n" +
                         "                        inner join product p on a.product_id = p.id\n" +
                         "                        inner join image i on i.product_id = p.id\n" +

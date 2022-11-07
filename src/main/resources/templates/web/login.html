@@ -51,7 +51,9 @@
                                     <input id="remember" type="checkbox">
                                     Remember me
                                 </label>
-                                <a href="#">Lost your password?</a>
+                                <a href="#" data-toggle="modal" data-target="#exampleModal">
+                                    Lost your password?
+                                </a>
                             </div>
 
                         </form>
@@ -98,6 +100,27 @@
             </div>
         </div>
         <!-- customer login end -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form th:action="@{/api/auth/forgot-password}" method="post" >
+                        <div class="border border-secondary rounded p-3">
+                            <div>
+                                <p>We will be sending a reset password link to your email.</p>
+                            </div>
+                            <div>
+                                <p>
+                                    <input type="email" name="email" class="form-control" placeholder="Enter your e-mail" required autofocus/>
+                                </p>
+                                <p class="text-center">
+                                    <input type="submit" value="Send" class="btn btn-primary" />
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script class="js">
@@ -126,7 +149,7 @@
             }
             if (validate){
                 try {
-                    await axios.post("/api/auth/register", {
+                    let res= await axios.post("/api/auth/register", {
                         name: nameRegister.value,
                         phone: phoneNumberEl.value,
                         email: emailRegister.value,
@@ -135,12 +158,8 @@
 
                     })
 
-                    alert("Register Successful!");
+                    alert(res.data);
 
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1500)
-                    window.location.href= "/";
                 } catch (e) {
                     console.log(e);
                 }
@@ -189,7 +208,8 @@
             } catch (e) {
                 console.log(e);
             }
-        })
+        });
+
     </script>
     </body>
 </html>

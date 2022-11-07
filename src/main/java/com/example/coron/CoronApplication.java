@@ -18,6 +18,4 @@ public class CoronApplication {
         return new ModelMapper();
     }
 
-
-
 }

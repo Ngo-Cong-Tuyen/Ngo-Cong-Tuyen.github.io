@@ -15,6 +15,7 @@ import java.util.List;
 public class CartInfo implements Serializable{
     private Integer userId;
     private Integer cartId;
+    private Integer status;
     private String productName;
     private String sku;
     private Integer price;

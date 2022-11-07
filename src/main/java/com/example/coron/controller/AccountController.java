@@ -3,6 +3,7 @@ package com.example.coron.controller;
 import com.example.coron.feedback.SimpleFeedback;
 import com.example.coron.repository.UserRepository;
 import com.example.coron.request.AccountRequest;
+import com.example.coron.request.ResetPasswordRequest;
 import com.example.coron.service.AuthService;
 import com.example.coron.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,5 +65,18 @@ public class AccountController {
     @ResponseBody
     public SimpleFeedback disableAccount(@PathVariable Integer id){
         return authService.controllerAccount(id, false);
+    }
+
+    @GetMapping("/api/auth/reset-password")
+    public String openResetPasswordForm(@RequestParam String token, Model model){
+        model.addAttribute("token",token);
+        authService.confirm(token);
+        return "auth/reset-password";
+    }
+
+    @PostMapping("/api/auth/reset-password")
+    @ResponseBody
+    public String processResetPassword(@RequestBody ResetPasswordRequest request){
+        return authService.resetPassword(request);
     }
 }

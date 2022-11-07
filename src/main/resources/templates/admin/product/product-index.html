@@ -3,14 +3,18 @@
       xmlns:th="https://www.thymeleaf.org"
       th:replace="~{/layout/layout-admin :: main-fragment(
         ~{:: title},
-        ~{},
+        ~{:: #css},
         ~{:: .content-wrapper},
         ~{:: #js}
       )}
 ">
 
 <head>
-    <title>Tất cả bài viết</title>
+    <title>Tất cả sản phẩm</title>
+    <th:block id="css">
+        <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    </th:block>
 </head>
 
 <body>
@@ -54,7 +58,7 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <th width="10"><input type="checkbox" id="all"></th>
+                                    <th >STT</th>
                                     <th>Mã sản phẩm</th>
                                     <th>Tên sản phẩm</th>
                                     <th>Ảnh</th>
@@ -67,11 +71,11 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="product: ${products}">
-                                    <td width="10"><input type="checkbox" name="check1" value="1"></td>
+                                <tr th:each="product, stat: ${products}">
+                                    <td th:text="${stat.index+1}"></td>
                                     <td th:text="${product.sku}">00000001</td>
                                     <td th:text="${product.name}">Áo thun nam</td>
-                                    <td><img src="" alt=""></td>
+                                    <td><img  th:if="${product.images.size()>0}" th:src="'/'+${product.images[0].url}" alt="" style="width: 50px" ></td>
                                     <td th:text="${T(com.example.coron.util.Utils).totalProducts(product.amounts)}">5</td>
                                     <td><span class="badge bg-success" th:text="${T(com.example.coron.util.Utils).totalProducts(product.amounts)} >0 ? 'Còn hàng': 'Hết hàng'" >Còn hàng</span></td>
                                     <td th:text="${product.price}">600000 đ</td>
@@ -86,43 +90,21 @@
                                 </tbody>
                             </table>
 
-                            <div class="d-flex justify-content-center mt-3" id="pagination">
-                                <ul class="pagination mb-0">
-                                    <li class="paginate_button page-item previous disabled"
-                                        id="example2_previous">
-                                        <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0"
-                                           class="page-link">Previous</a>
-                                    </li>
-                                    <li class="paginate_button page-item active">
-                                        <a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0"
-                                           class="page-link">1</a>
-                                    </li>
-                                    <li class="paginate_button page-item">
-                                        <a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0"
-                                           class="page-link">2</a>
-                                    </li>
-                                    <li class="paginate_button page-item">
-                                        <a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0"
-                                           class="page-link">3</a>
-                                    </li>
-                                    <li class="paginate_button page-item">
-                                        <a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0"
-                                           class="page-link">4</a>
-                                    </li>
-                                    <li class="paginate_button page-item">
-                                        <a href="#" aria-controls="example2" data-dt-idx="5" tabindex="0"
-                                           class="page-link">5</a>
-                                    </li>
-                                    <li class="paginate_button page-item">
-                                        <a href="#" aria-controls="example2" data-dt-idx="6" tabindex="0"
-                                           class="page-link">6</a>
-                                    </li>
-                                    <li class="paginate_button page-item next" id="example2_next">
-                                        <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0"
-                                           class="page-link">Next</a>
-                                    </li>
-                                </ul>
+                            <!--pagination style start-->
+                            <div class="pagination_style">
+                                <div class="page_number">
+                                    <span>Pages: </span>
+                                    <ul>
+                                        <li th:if="${currentPage>1}">«</li>
+                                        <span id="pages">
+                                    <li class="current_number">1</li>
+                                    <li><a href="#">2</a></li>
+                                </span>
+                                        <li th:if="${currentPage<totalPage}">»</li>
+                                    </ul>
+                                </div>
                             </div>
+                            <!--pagination style end-->
                         </div>
                     </div>
                 </div>
@@ -133,6 +115,13 @@
 </div>
 <th:block id="js">
     <script th:inline="javascript">
+        const totalPage = [[${totalPage}]];
+        const pageEls= document.getElementById("pages");
+        let html= "";
+        for (let i =0;i<totalPage; i++){
+            html+= `<li><a href="/admin/products/page/${i+1}">${i+1}</a></li>`
+        }
+        pageEls.innerHTML= html;
         async function deleteProduct(Product) {
             try {
                 await

@@ -64,7 +64,7 @@ class CoronApplicationTests {
 
     @Test
     void getproducts() {
-        System.out.println(productService.getAllProductDto());
+        System.out.println(productService.getAllProduct(1,6,"price"));
     }
 
     @Test

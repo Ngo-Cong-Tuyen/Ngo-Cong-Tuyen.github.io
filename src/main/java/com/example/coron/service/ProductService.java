@@ -1,6 +1,7 @@
 package com.example.coron.service;
 
 import com.example.coron.dto.ProductDto;
+import com.example.coron.dto.ProductInfo;
 import com.example.coron.dto.ReviewInfo;
 import com.example.coron.entity.*;
 import com.example.coron.exception.NotFoundException;
@@ -75,18 +76,30 @@ public class ProductService {
         product.setDescription(request.getDescription());
         product.setPrice(request.getPrice());
         product.setCategories(categoryRepository.getByIdIn(request.getCategories()));
-        ModelMapper modelMapper = new ModelMapper();
-        List<Amount> amounts = request.getAmounts().stream().map(amount -> modelMapper.map(amount,Amount.class)).collect(Collectors.toList());
         productRepository.save(product);
-        amountRepository.deleteByProduct(product);
-        amounts.forEach(amount -> amount.setProduct(product));
-        amountRepository.saveAll(amounts);
+        List<Amount> amountExists = amountRepository.findByProduct_Sku(sku);
+        request.getAmounts().forEach(amountRequest -> {
+            amountExists.forEach(amount -> {
+                if (amountRequest.getSize().equals(amount.getSize()) && amountRequest.getColor().equalsIgnoreCase(amount.getColor())){
+                    amount.setQuantity(amountRequest.getQuantity());
+                    amountRepository.save(amount);
+                } else {
+                    Amount amount1 = Amount.builder()
+                            .color(amountRequest.getColor())
+                            .size(amountRequest.getSize())
+                            .quantity(amountRequest.getQuantity())
+                            .product(product).build();
+                    amountRepository.save(amount1);
+                }
+            });
+        });
     }
 
     // Get list products to render
-    public List<ProductDto> getAllProductDto() {
-        List<Product> products= productRepository.findAll();
-        return mapperProductToProductDto(products);
+    public Page<Product> getAllProduct(Integer pageNo, Integer pageSize, String sortDir) {
+        Pageable paging = PageRequest.of(pageNo-1,pageSize, Sort.by(sortDir));
+        Page<Product> page= productRepository.findAll(paging);
+        return page;
     }
     public List<ProductDto> getAllHotProductDto() {
         List<Product> products= productRepository.findAll();
@@ -119,15 +132,15 @@ public class ProductService {
     }
 
 
-    public Page<Product> getAllProductInfo(int pageNumber, String sortField, String sortDir, String category, String keyword) {
+    public Page<Product> getAllProductInfo(int pageNumber, String sortField, String sortDir, String category,String color, String keyword) {
         Sort sort = Sort.by(sortField);
         sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
         Pageable pageable = PageRequest.of(pageNumber -1, 9, sort);
         if (keyword!= null) {
             keyword = "%"+ keyword+ "%";
-            return productRepository.getAllProductInfo(keyword,category,pageable);
+            return productRepository.getAllProductInfo(keyword,category,color,pageable);
         } else
-        return productRepository.getAllProductInfo("%%",category, pageable);
+        return productRepository.getAllProductInfo("%%",category,color, pageable);
 
     }
 
@@ -188,5 +201,9 @@ public class ProductService {
             }
         }
         return false;
+    }
+
+    public List<ProductInfo> getHotProducts() {
+        return productRepository.getHotProductInfos();
     }
 }

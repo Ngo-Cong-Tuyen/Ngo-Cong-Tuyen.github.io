@@ -26,7 +26,4 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
     @Query("select c from Cart c where c.user.email = ?1 and c.amount.product.sku = ?2 and c.status = ?3")
     List<Cart> findByUser_EmailAndAmount_Product_SkuAndStatus(String email, String sku, Integer status);
 
-
-
-
 }

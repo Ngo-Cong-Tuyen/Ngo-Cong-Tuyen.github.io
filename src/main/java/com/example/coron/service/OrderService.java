@@ -10,6 +10,9 @@ import com.example.coron.repository.OrderRepository;
 import com.google.gson.Gson;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -101,9 +104,12 @@ public class OrderService {
         Gson gson= new Gson();
         OrderCreateRequestMapper orderRequest = gson.fromJson(requestBody,OrderCreateRequestMapper.class);
         OrderCreateResponseMapper orderResponse = gson.fromJson(postResponse.body(),OrderCreateResponseMapper.class);
+        System.out.println(orderRequest);
+        System.out.println(orderResponse);
         if (orderResponse.getCode()==200){
             return create(orderRequest,orderResponse, orderHeaders);
         } else {
+            System.out.println(orderHeaders.getCarts());
             cartService.changeListCartStatus(orderHeaders.getCarts(),2,1);
             feedback.setValidate(false);
             feedback.setMessage(postResponse.body());
@@ -111,12 +117,14 @@ public class OrderService {
         return feedback;
     }
 
-    public List<OrderInfo> getAllOrder(){
-        List<OrderInfo> list = orderRepository.findAll().stream()
+    public Object[] getAllOrder(Integer pageNo, Integer pageSize){
+        Pageable pageable = PageRequest.of(pageNo-1,pageSize);
+        Page<Order> orders = orderRepository.findAll(pageable);
+        List<OrderInfo> list = orders.getContent().stream()
                 .map(order -> modelMapper.map(order,OrderInfo.class))
                 .collect(Collectors.toList());
         list.forEach(orderInfo -> orderInfo.setCarts(cartService.getListCartByOrderId(orderInfo.getId())));
-        return list;
+        return new Object[] {orders.getTotalPages(),list};
     }
 
     public SimpleFeedback changeStatusOrderById(Integer id, Integer status) {

@@ -2,16 +2,15 @@ package com.example.coron.dto;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
-import java.util.List;
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @ToString
-public class ProductInfo {
+public class WishlistInfo {
     private String sku;
-    private String name;
-    private Integer price;
     private String image;
+    private String productName;
+    private Integer price;
+    private Integer stockStatus;
 }

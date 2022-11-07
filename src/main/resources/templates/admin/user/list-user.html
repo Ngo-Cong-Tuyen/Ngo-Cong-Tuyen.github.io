@@ -79,10 +79,10 @@
                                                 th:if="${user.role.contains('EDITOR')}" th:onclick="lowerAuthority([[${user.id}]])"><i class="fas fa-arrow-down"></i>
                                         </button>
                                         <button class="btn btn-success btn-sm edit" type="button" title="Kích hoạt"
-                                                th:if="${user.enabled}==null or !${user.enabled}" th:onclick="enableAccount([[${user.id}]])"><i class="fas fa-edit"></i>
+                                                th:if="${user.enabled}==null or !${user.enabled}" th:onclick="enableAccount([[${user.id}]])"><i class="fas fa-key"></i>
                                         </button>
                                         <button class="btn btn-danger btn-sm edit" type="button" title="Khóa"
-                                                th:if="${user.enabled}" th:onclick="disableAccount([[${user.id}]])"><i class="fas fa-edit"></i>
+                                                th:if="${user.enabled}" th:onclick="disableAccount([[${user.id}]])"><i class="fas fa-lock"></i>
                                         </button>
                                     </td>
 

@@ -1,5 +1,6 @@
 package com.example.coron.entity;
 
+import com.example.coron.dto.ProductDto;
 import com.example.coron.dto.ProductInfo;
 import lombok.*;
 
@@ -9,12 +10,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @NamedNativeQuery(
-        name = "getAllProductInfo",
+        name = "getHotProductInfos",
         query =
-                "select p.name, p.price, i.url as image  from product p \n" +
-                        "left join image i on i.product_id = p.id \n" +
-                        "where concat(p.name, ' ', p.sku ) like ?1 \n" +
-                        "group by p.id",
+                "select p.sku , p.name,p.price, i.url as image  from product p\n" +
+                        "inner join image i on i.product_id = p.id \n" +
+                        "group by p.id\n" +
+                        "order by (select count(w.product_id) from wishlist w \n" +
+                        "where w.product_id = p.id) desc",
         resultSetMapping = "listProductInfo"
 )
 @SqlResultSetMapping(
@@ -22,6 +24,7 @@ import java.util.Collection;
         classes = @ConstructorResult(
                 targetClass = ProductInfo.class,
                 columns = {
+                        @ColumnResult(name = "sku", type = String.class),
                         @ColumnResult(name = "name", type = String.class),
                         @ColumnResult(name = "price", type = Integer.class),
                         @ColumnResult(name = "image", type = String.class)
@@ -36,7 +39,8 @@ import java.util.Collection;
 @ToString
 @Entity
 
-@Table(name = "product")
+@Table(name = "product",
+        indexes = {@Index(name = "idx_product_sku",  columnList="sku", unique = true)})
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

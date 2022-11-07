@@ -1,5 +1,6 @@
 package com.example.coron.controller;
 
+import com.example.coron.entity.Order;
 import com.example.coron.feedback.SimpleFeedback;
 import com.example.coron.request.OrderCreateRequest;
 import com.example.coron.request.ShopCreateRequest;
@@ -8,6 +9,7 @@ import com.example.coron.service.OrderService;
 import com.example.coron.service.ShopService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
@@ -32,8 +34,15 @@ public class OrderController {
 
 
     @GetMapping("/admin/orders")
-    public String getListOrderPage(Model model){
-        model.addAttribute("orders", orderService.getAllOrder());
+    public String viewListOrderPage(Model model){
+        return  getListOrderPage(1,model);
+    }
+
+    @GetMapping("/admin/orders/page/{pageNo}")
+    public String getListOrderPage(@PathVariable Integer pageNo,Model model){
+        Object [] orderPageOb = orderService.getAllOrder(pageNo,9);
+        model.addAttribute("orders", orderPageOb[1]);
+        model.addAttribute("totalPage", orderPageOb[0]);
         return "admin/order/list-order";
     }
 

@@ -1,23 +1,18 @@
 package com.example.coron.controller;
 
 import com.example.coron.dto.ProductDto;
-import com.example.coron.dto.ProductInfo;
 import com.example.coron.entity.Product;
 import com.example.coron.feedback.SimpleFeedback;
 import com.example.coron.request.ProductCreateRequest;
 import com.example.coron.request.ProductUpdateRequest;
 import com.example.coron.request.ReviewRequest;
-import com.example.coron.service.AuthService;
-import com.example.coron.service.CategoryService;
-import com.example.coron.service.ImageService;
-import com.example.coron.service.ProductService;
+import com.example.coron.service.*;
 import com.example.coron.util.UtilsBackend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -35,11 +30,21 @@ public class ProductController {
     private AuthService authService;
     @Autowired
     private UtilsBackend utilsBackend;
+    @Autowired
+    private WishlistService wishlistService;
 
     @GetMapping("/admin/products")
-    public String getBlogsPage(Model model) {
-        model.addAttribute("products", productService.getAllProductDto());
-        System.out.println(productService.getAllProductDto());
+    public String viewListProductPage(Model model) {
+        return getProductPage(1, model);
+    }
+
+    @GetMapping("/admin/products/page/{pageNumber}")
+    public String getProductPage(@PathVariable Integer pageNumber,Model model) {
+        Page<Product> page = productService.getAllProduct(pageNumber,6, "createdAt");
+        List<ProductDto> products = productService.mapperProductToProductDto(page.getContent());
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("products",products);
+        model.addAttribute("totalPage", page.getTotalPages());
         return "admin/product/product-index";
     }
 
@@ -79,9 +84,12 @@ public class ProductController {
     // pagination and sorting
     @RequestMapping("/shop")
     public String viewShopPage(Model model){
+        String email = authService.checkUser();
+        model.addAttribute("wishlist", wishlistService.getWishlist(email));
         String keyword = "";
         String category= "";
-        return listByPage(model,1, "name", "asc",category, keyword);
+        String color= "";
+        return listByPage(model,1, "name", "asc",category,color, keyword);
     }
 
     @GetMapping("/shop/page/{pageNumber}")
@@ -90,8 +98,9 @@ public class ProductController {
                              @RequestParam String sortField,
                              @RequestParam String sortDir,
                              @RequestParam(defaultValue = "") String category,
+                             @RequestParam(defaultValue = "") String color,
                              @RequestParam(defaultValue = "") String keyword){
-        Page<Product> page = productService.getAllProductInfo(currentPage,sortField,sortDir,category, keyword);
+        Page<Product> page = productService.getAllProductInfo(currentPage,sortField,sortDir,category,color, keyword);
         List<ProductDto> products = productService.mapperProductToProductDto(page.getContent());
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("products",products);
@@ -99,6 +108,7 @@ public class ProductController {
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("totalPage", page.getTotalPages());
         model.addAttribute("keyword", keyword);
+        model.addAttribute("color", color);
         model.addAttribute("categorySearch", category);
         model.addAttribute("parentCategories", categoryService.getAllParentCategory());
         model.addAttribute("categories", categoryService.getAll());

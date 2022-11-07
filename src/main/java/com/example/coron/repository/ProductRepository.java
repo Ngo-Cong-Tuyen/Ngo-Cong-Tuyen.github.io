@@ -14,11 +14,13 @@ import java.util.Optional;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
     Optional<Product> findBySku(String sku);
 
-    @Query("select distinct p from Product p inner join p.categories categories " +
+    @Query("select distinct p from Product p inner join p.categories categories inner join p.amounts amounts" +
             " where concat(p.name, ' ', p.sku ) like %?1%" +
-            "and categories.name like ?2%")
-    Page<Product> getAllProductInfo(String keyword,String category, Pageable pageable);
+            "and categories.name like ?2%" +
+            "and amounts.color like %?3%")
+    Page<Product> getAllProductInfo(String keyword,String category,String color, Pageable pageable);
 
-
+    @Query(nativeQuery = true, name = "getHotProductInfos")
+    List<ProductInfo> getHotProductInfos();
 
 }

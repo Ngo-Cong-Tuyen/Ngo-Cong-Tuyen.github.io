@@ -1,8 +1,12 @@
 package com.example.coron;
 
+import com.example.coron.dto.CartInfo;
+import com.example.coron.dto.WishlistInfo;
 import com.example.coron.entity.Product;
 import com.example.coron.repository.CartRepository;
+import com.example.coron.repository.ProductRepository;
 import com.example.coron.repository.UserRepository;
+import com.example.coron.repository.WishlistRepository;
 import com.example.coron.service.*;
 import com.example.coron.util.UtilsBackend;
 import org.junit.jupiter.api.Test;
@@ -14,6 +18,7 @@ import org.springframework.data.domain.Page;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 public class UniqueTest {
@@ -39,6 +44,10 @@ public class UniqueTest {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private WishlistRepository wishlistRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
 
     @Test
@@ -60,12 +69,13 @@ public class UniqueTest {
 
     @Test
     void getCart() {
-        System.out.println(cartService.getAllCartInfoByUserEmail("tuyen@gmail.com"));
+        List<CartInfo> carts = cartService.getAllCartInfoByUserEmail("tuyen@gmail.com");
+        carts.forEach(System.out::println);
     }
 
     @Test
     void filter() {
-       Page<Product> page= productService.getAllProductInfo(1, "name", "asc","", "vay");
+       Page<Product> page= productService.getAllProductInfo(1, "name", "asc","","", "vay");
        System.out.println(page.getTotalElements());
     }
 
@@ -76,7 +86,7 @@ public class UniqueTest {
 
     @Test
     void getOrders() {
-        System.out.println(orderService.getAllOrder());
+        System.out.println(orderService.getAllOrder(1,9));
     }
 
     @Test
@@ -90,5 +100,17 @@ public class UniqueTest {
     void checkAddress() {
         Boolean check = userService.checkAddress("tuyenemotion@gmail.com");
         System.out.println(check);
+    }
+
+    @Test
+    void findWishlist(){
+        List<WishlistInfo> wishlistInfos = wishlistRepository.getWishListInfoByEmail("tuyenemotion@gmail.com");
+        System.out.println(wishlistInfos);
+    }
+
+    @Test
+    void findBySku() {
+        Optional<Product> product = productRepository.findBySku("APN4396-TRA-S");
+        System.out.println(product.get());
     }
 }

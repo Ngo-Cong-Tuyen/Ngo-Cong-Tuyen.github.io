@@ -65,16 +65,6 @@
                     <div class="col-lg-7 col-md-6">
                         <div class="product_d_right">
                             <h1 th:text="${product.name}">Printed Summer Dress</h1>
-                            <div class="product_ratting mb-10">
-                                <ul>
-                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li><a href="#"> Write a review </a></li>
-                                </ul>
-                            </div>
                             <div class="product_desc">
                                 <p th:utext="${product.content}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati modi culpa voluptates illo, quos magni totam inventore delectus perspiciatis necessitatibus, iure rerum! Deleniti nobis voluptatibus minus, iusto ullam quae esse..</p>
                             </div>
@@ -89,7 +79,7 @@
                                     <input min="0" max="100" value="1" type="number" id="quantity">
                                 </form>
                                 <button type="submit" id="add-to-cart"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                <a href="#" title="add to wishlist"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                                <a href="#" title="add to wishlist" th:attr="onclick=|addToWishlist('${product.sku}')|"><i class="fa fa-heart" aria-hidden="true"></i></a>
                             </div>
                             <div class="product_d_size mb-20 ">
                                 <label for="size" class="justify-content-center align-content-center mr-2">size</label>
@@ -329,6 +319,14 @@
             }
         </script>
         <script th:inline="javascript">
+            async function addToWishlist(sku){
+                try {
+                    let res = await axios.post(`/api/v2/wishlist/${authentication.name}/${sku}`);
+                    alert(res.data);
+                } catch (e) {
+                    console.log(e);
+                }
+            };
             const product = [[${product}]];
             const colorProductEl = document.getElementById("color-product-choose");
             const sizeChooseEl = document.getElementById("size");
@@ -371,7 +369,7 @@
                         return;
                     }
                     if (amountId==0) {
-                        alert("Choose color please!");
+                        alert("This product has sold out");
                         return;
                     }
                     try {
@@ -392,6 +390,8 @@
                     }, 1500)
                 }
             });
+
+
         </script>
 
 

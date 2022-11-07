@@ -30,6 +30,8 @@ public class AuthController {
         return authService.confirm(token);
     }
 
+
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -48,7 +50,11 @@ public class AuthController {
         // Lưu thông tin vào trong session
         session.setAttribute("MY_SESSION", authentication.getName());
     }
-
+    @PostMapping("/forgot-password")
+    public String processForgotPassword(String email) {
+        String message =  authService.sendResetPassToken(email);
+        return "Check your email";
+    }
 
 
 }

@@ -361,7 +361,17 @@
                         "color": row.querySelectorAll("input")[1].value,
                         "quantity": row.querySelectorAll("input")[2].value
                     }
-                    amountRequest.push(amount);
+                    let check=true;
+                    for (let a of amountRequest) {
+                        if (a.size==amount.size && a.color.toUpperCase()== amount.color.toUpperCase()){
+                            check = false;
+                        }
+                    }
+                    if (check) {amountRequest.push(amount);} else {
+                        alert("Duplicate value in table");
+                        return;
+                    };
+
                 }
                 await axios.put(`/api/admin/products/${product.sku}`,{
                     sku: skuEl.value,

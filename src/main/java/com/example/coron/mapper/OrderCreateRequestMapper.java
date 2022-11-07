@@ -28,7 +28,7 @@ public class OrderCreateRequestMapper implements Serializable {
     private Integer width;
     private Integer height;
     private String pick_station_id;
-    private String deliver_station_id;
+    private Integer deliver_station_id;
     private String insurance_value;
     private Integer service_type_id;
     private String coupon;

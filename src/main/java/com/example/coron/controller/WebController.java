@@ -1,19 +1,22 @@
 package com.example.coron.controller;
 
-import com.example.coron.security.UserDetailsCustom;
+import com.example.coron.dto.ProductDto;
+import com.example.coron.dto.ProductInfo;
+import com.example.coron.entity.Product;
 import com.example.coron.service.AuthService;
 import com.example.coron.service.CartService;
 import com.example.coron.service.ProductService;
-import org.hibernate.annotations.Parameter;
+import com.example.coron.service.WishlistService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 
@@ -25,81 +28,22 @@ public class WebController {
     private CartService cartService;
     @Autowired
     private AuthService authService;
+    @Autowired
+    private WishlistService wishlistService;
 
 
-    @GetMapping("/layout")
-    public String getLayoutPage(Model model) {
-        return "layout/layout";
-    }
 
-    // Get index page 1
     @GetMapping("/")
     public String getHomePage(Model model) {
         String email = authService.checkUser();
         model.addAttribute("carts", cartService.getAllCartInfoByUserEmail(email));
-        model.addAttribute("products", productService.getAllProductDto());
+        Page<Product> page = productService.getAllProduct(1,6, "createdAt");
+        List<ProductDto> products = productService.mapperProductToProductDto(page.getContent());
+        model.addAttribute("products", products);
+        List<ProductInfo> hotProducts =  productService.getHotProducts();
+        model.addAttribute("hotProducts", hotProducts);
+        model.addAttribute("wishlist", wishlistService.getWishlist(email));
         return "web/index";
-    }
-
-    // Get index page 2
-    @GetMapping("/index")
-    public String getBlogsPage(Model model) {
-        return "web/index-2";
-    }
-
-
-    // Get shop page
-
-    @GetMapping("/shop-list")
-    public String getShopListPage(Model model) {
-        return "web/shop-list";
-    }
-
-    @GetMapping("/shop-fullwidth")
-    public String getShopFullWidthPage(Model model) {
-        return "web/shop-fullwidth";
-    }
-
-    @GetMapping("/shop-fullwidth-list")
-    public String getShopFullWidthListPage(Model model) {
-        return "web/shop-fullwidth-list";
-    }
-
-    @GetMapping("/shop-sidebar")
-    public String getShopSidebarPage(Model model) {
-        return "web/shop-sidebar";
-    }
-
-
-    @GetMapping("/shop-sidebar-list")
-    public String getShopSidebarListPage(Model model) {
-        return "web/shop-sidebar-list";
-    }
-
-
-
-    @GetMapping("/single-product-sidebar")
-    public String getSingleProductSidebarPage(Model model) {
-        return "web/single-product-sidebar";
-    }
-
-    @GetMapping("/single-product-video")
-    public String getSingleProductVideoPage(Model model) {
-        return "web/single-product-video";
-    }
-
-    @GetMapping("/single-product-gallery")
-    public String getSingleProductGalleryPage(Model model) {
-        return "web/single-product-gallery";
-    }
-    @GetMapping("/contact")
-    public String getContactPage(Model model) {
-        return "web/contact";
-    }
-
-    @GetMapping("/wishlist")
-    public String getWishlistPage(Model model) {
-        return "web/wishlist";
     }
 
 
@@ -131,4 +75,5 @@ public class WebController {
 
         return "error/error";
     }
+
 }

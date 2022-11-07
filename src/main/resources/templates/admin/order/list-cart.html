@@ -71,10 +71,10 @@
                                     <td th:text="${carts.userName}">00000001</td>
                                     <td >
                                         <div class="shopping_cart" style="width: 250px">
-                                            <a href="#"><i class="fa fa-shopping-cart"></i> <th:block th:text="${T(com.example.coron.util.Utils).renderCart(carts.cartInfos)}"></th:block> <i class="fa fa-angle-down"></i></a>
+                                            <a href="#" onclick="turnOnMiniCart(this)"><i class="fa fa-shopping-cart"></i> <th:block th:text="${T(com.example.coron.util.Utils).renderCart(carts.cartInfos)}"></th:block> <i class="fa fa-angle-down"></i></a>
 
                                             <!--mini cart-->
-                                            <div class="mini_cart" style="width: 250px">
+                                            <div class="mini_cart" style="width: 250px;">
                                                 <div class="cart_item" th:each="cart:${carts.cartInfos}">
                                                     <div class="cart_img">
                                                         <a th:href="@{/single-product/{sku} (sku=${cart.sku})}"><img th:src="@{'/'+${cart.image}}" alt="" style="max-width: 100%"></a>
@@ -85,7 +85,7 @@
                                                         <span class="quantity" th:text="'Qty: '+ ${cart.quantity}">Qty: 1</span>
                                                     </div>
                                                     <div class="cart_remove">
-                                                        <a title="Remove this item" href="#"><i class="fa fa-times-circle"></i></a>
+                                                        <a  class="off-form"><i class="fa fa-times-circle"></i></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -245,6 +245,14 @@
                                 <option value="2" selected>Trả sau</option>
                             </select>
                         </div>
+                        <div class="w-50 mr-2">
+                            <label for="pay-type-id" class="form-label w-100" >Phương thức vận chuyển<span>*</span></label>
+                            <select class="form-select w-100 mb-3" id="method-transit">
+                                <option value="1">Nhanh</option>
+                                <option value="2" >Chuẩn</option>
+                                <option value="3" >Tiết kiệm</option>
+                            </select>
+                        </div>
                         <div class="w-50">
                             <label for="required-note" class="form-label w-100" >Hình thức kiểm tra <span>*</span></label>
                             <select class="form-select w-100 mb-3" id="required-note">
@@ -285,6 +293,17 @@
 </div>
 <th:block id="js">
     <script th:inline="javascript">
+        function turnOnMiniCart(dropdownEl){
+            let miniCart = dropdownEl.nextElementSibling;
+            console.log(miniCart);
+            let offFormBtn = miniCart.querySelector(".off-form");
+            console.log(offFormBtn);
+            offFormBtn.addEventListener('click', function (){
+                miniCart.style.display= "none";
+            })
+            miniCart.style.display= "block";
+
+        }
         async function deleteListCart(carts) {
             let listCartInfo=[];
             for (let cart of carts){
@@ -429,7 +448,7 @@
                             "pick_station_id": null,
                             "deliver_station_id": null,
                             "insurance_value": codAmount,
-                            "service_type_id":2,
+                            "service_type_id":parseInt($("#method-transit").val()),
                             "coupon":null,
                             "pick_shift":[2],
                             "items": items
@@ -440,6 +459,7 @@
                             "carts": listCarts
                         }
                     });
+                    alert(res.data.message);
                     console.log(res);
 
                 } catch (e) {
@@ -553,8 +573,6 @@
             getDistrict(parseInt(provinceEl.value));
         });
     </script>
-    <script th:src="@{/assets/js/plugins.js}"></script>
-    <script th:src="@{/assets/js/main.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </th:block>
 </body>

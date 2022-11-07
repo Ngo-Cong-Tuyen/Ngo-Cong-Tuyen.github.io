@@ -8,12 +8,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface AmountRepository extends JpaRepository<Amount, Integer> {
     @Transactional
     @Modifying
     @Query("delete from Amount a where a.product = ?1")
     void deleteByProduct(Product product);
+
+    List<Amount> findByProduct_Sku(String sku);
 
 
 

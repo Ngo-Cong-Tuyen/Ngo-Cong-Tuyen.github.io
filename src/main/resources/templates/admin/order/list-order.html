@@ -124,43 +124,21 @@
                 </tbody>
               </table>
 
-              <div class="d-flex justify-content-center mt-3" id="pagination">
-                <ul class="pagination mb-0">
-                  <li class="paginate_button page-item previous disabled"
-                      id="example2_previous">
-                    <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0"
-                       class="page-link">Previous</a>
-                  </li>
-                  <li class="paginate_button page-item active">
-                    <a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0"
-                       class="page-link">1</a>
-                  </li>
-                  <li class="paginate_button page-item">
-                    <a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0"
-                       class="page-link">2</a>
-                  </li>
-                  <li class="paginate_button page-item">
-                    <a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0"
-                       class="page-link">3</a>
-                  </li>
-                  <li class="paginate_button page-item">
-                    <a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0"
-                       class="page-link">4</a>
-                  </li>
-                  <li class="paginate_button page-item">
-                    <a href="#" aria-controls="example2" data-dt-idx="5" tabindex="0"
-                       class="page-link">5</a>
-                  </li>
-                  <li class="paginate_button page-item">
-                    <a href="#" aria-controls="example2" data-dt-idx="6" tabindex="0"
-                       class="page-link">6</a>
-                  </li>
-                  <li class="paginate_button page-item next" id="example2_next">
-                    <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0"
-                       class="page-link">Next</a>
-                  </li>
-                </ul>
+              <!--pagination style start-->
+              <div class="pagination_style">
+                <div class="page_number">
+                  <span>Pages: </span>
+                  <ul>
+                    <li th:if="${currentPage>1}">«</li>
+                    <span id="pages">
+                                    <li class="current_number">1</li>
+                                    <li><a href="#">2</a></li>
+                                </span>
+                    <li th:if="${currentPage<totalPage}">»</li>
+                  </ul>
+                </div>
               </div>
+              <!--pagination style end-->
             </div>
           </div>
         </div>
@@ -171,6 +149,13 @@
 </div>
 <th:block id="js">
   <script th:inline="javascript">
+    const totalPage = [[${totalPage}]];
+    const pageEls= document.getElementById("pages");
+    let html= "";
+    for (let i =0;i<totalPage; i++){
+      html+= `<li><a href="/admin/orders/page/${i+1}">${i+1}</a></li>`
+    }
+    pageEls.innerHTML= html;
     const orders = [[${orders}]];
     console.log(orders);
     function turnOnMiniCart(dropdownEl){

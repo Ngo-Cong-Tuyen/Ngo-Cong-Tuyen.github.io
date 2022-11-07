@@ -2,10 +2,7 @@ package com.example.coron.controller;
 
 import com.example.coron.request.CartRequest;
 import com.example.coron.request.ListCartRequest;
-import com.example.coron.service.AuthService;
-import com.example.coron.service.CartService;
-import com.example.coron.service.ShopService;
-import com.example.coron.service.UserService;
+import com.example.coron.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +20,7 @@ public class CartController {
     private ShopService shopService;
     @Autowired
     private UserService userService;
+
 
     @GetMapping("/cart")
     public String getCartPage(Model model) {

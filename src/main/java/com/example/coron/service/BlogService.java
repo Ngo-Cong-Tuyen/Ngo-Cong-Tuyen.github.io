@@ -74,7 +74,6 @@ public class BlogService {
 
         blogRepository.save(blog);
     }
-
     public void deleteBlogById(Integer id) {
         blogRepository.deleteById(id);
     }
